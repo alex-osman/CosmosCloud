@@ -35,8 +35,6 @@ angular
 		}
 		$scope.submitForm = function() {
 			$http.post("/SQL/Transactions", $scope.post, function() {
-				$scope.post = {
-				}
 				$route.reload();
 			})
 		}

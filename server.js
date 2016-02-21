@@ -116,6 +116,8 @@ app.get('/SQL', function(req, res) {
 
 app.post('/SQL/Transactions', function(req, res) {
 	connection.query('INSERT INTO Transactions SET ?', req.body, function(err, result) {
+		console.log(err)
+		console.log(result)
 		res.send("ok");
 	})
 })
