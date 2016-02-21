@@ -110,10 +110,6 @@ app.get('/api/docs', function(req, res) {
 app.get('/SQL', function(req, res) {
 	connection.query('SELECT * from Transactions;', function(err, rows, field) {
 		if (err) throw err;
-		for (var i = 0; i < rows.length; i++) {
-			primarykeys.push(rows[i].idtablename)
-		}
-		//console.log(rows);
 		res.send(rows)
 	})
 })
