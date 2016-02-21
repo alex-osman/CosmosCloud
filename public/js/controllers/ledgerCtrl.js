@@ -5,7 +5,8 @@ angular
 			User: "null",
 			Date: new Date(),
 			Description: "",
-			Cost: 0
+			Cost: 0,
+			idtablename: (new Date().getTime())
 		}
 		$scope.users = ['Alex', 'Ian', 'Jody', 'Wil', 'Jon', 'Dan']
 		$scope.entries = [];

@@ -44,7 +44,6 @@
 			<form class="form-inline well">
 				<label class="control-label">Name: </label><br>
 				<select class="form-control" ng-model="post.User">
-					<option></option>
 					<option ng-repeat="user in users | orderBy: 'toString()'">{{user}}</option>
 				</select>
 				<br><br>

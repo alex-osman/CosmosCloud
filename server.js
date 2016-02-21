@@ -16,7 +16,6 @@ var connection = mysql.createConnection({
 	database: 'test'
 });
 connection.connect()
-var primarykeys = [];
 var movie_folder = "public/assets/Movies/"
 var picture_folder = "public/assets/pictures/"
 var doc_folder = "public/assets/docs/"
@@ -120,14 +119,9 @@ app.get('/SQL', function(req, res) {
 })
 
 app.post('/SQL/Transactions', function(req, res) {
-	for (var i = 0; i < primarykeys.length + 1; i++){
-		if (primarykeys.indexOf(i) <= -1) {
-			req.body.idtablename = i;
-			connection.query('INSERT INTO Transactions SET ?', req.body, function(err, result) {
-				res.send("ok");
-			})
-		}
-	}
+	connection.query('INSERT INTO Transactions SET ?', req.body, function(err, result) {
+		res.send("ok");
+	})
 })
 
 app.get('/SQL/remove/:id', function(req, res) {
