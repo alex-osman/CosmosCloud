@@ -1,0 +1,22 @@
+<div ng-controller="docCtrl" style="margin-top: 20px">
+	<div class="row">
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-1">
+			<button class="btn btn-primary" ng-click="upload()">Upload</button>
+		</div>
+		<div class="col-md-8">
+			<table class="table table-hover table-sm">
+				<tr>
+					<th>Name</th>
+					<th>Delete</th>
+				</tr>
+				<tr ng-repeat="doc in docs">
+					<td><a ng-href="assets/docs/{{doc}}">{{doc}}</a></td>
+					<td><div ng-click="delete(doc)">Delete</div></td>
+				</tr>
+			</table>
+			{{hello}}
+		</div>
+	</div>
+</div>

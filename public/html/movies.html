@@ -1,0 +1,29 @@
+<div ng-controller="movieCtrl" style="margin-top: 20px">
+	<div class="row">
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-1">
+			<button class="btn btn-primary" ng-click="upload()">Upload</button>
+		</div>
+		<div class="col-md-8">
+			<table class="table table-hover table-sm">
+				<tr>
+					<th>Preview</th>
+					<th>Download</th>
+					<th>Watch Online</th>
+					<th>Size</th>
+					<th>Delete</th>
+				</tr>
+				<tr ng-repeat="movie in movies">
+					<td>
+						<video width="320" height="240" ng-src="{{movie.path}}" controls></video>
+					</td>
+					<td><a download="{{movie.name}}" ng-href="{{movie.path}}">{{movie.name}}</a></td>
+					<td><a ng-href="{{movie.path}}">Watch</a></td>
+					<td>{{movie.bytes | bytes}}</td>
+					<td><div ng-click="delete(movie.name)">Delete</div></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
