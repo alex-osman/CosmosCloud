@@ -134,10 +134,26 @@ app.get('/api/remote/open/:movie', function(req, res) {
 
 app.get('/api/remote/:command', function(req, res) {
 	var command = req.params.command;
+	switch(command) {
+		case 'up':
+			command = "$'\e'[A"
+			break;
+		case 'down':
+			command = "$'\e'[B"
+			break;
+		case 'right':
+			command = "$'\e'[C"
+			break;
+		case 'left':
+			command = "$'\e'[D"
+			break;
+	}
+
+
 	fs.appendFile('FIFO', command, function(err) {
 		if (err) throw err;
 		console.log(command);
-		res.send("p");
+		res.send("Success");
 	})
 })
 

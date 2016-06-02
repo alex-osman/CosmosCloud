@@ -1,13 +1,52 @@
-<div ng-controller="remoteCtrl" class="container">
+<div ng-controller="remoteCtrl" class="container-fluid" ng-Keypress="keypress($event)" focus>
 	<br>
 	<div class="row">
-		<div class="col-md-10">
-			<h1>Hello!</h1>
+		<div class="col-sm-4">
+			<div class="row">
+				<div class="col-md-12">
+					<button type="button" class="btn btn-lg btn-primary" ng-click="sendCommand(1)" style="width: 100%">-</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<button type="button" class="btn btn-lg btn-primary" ng-click="sendCommand('<')" style="width: 100%; height: 100%">&lt;&lt;</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<button type="button" class="btn btn-lg btn-danger" ng-click="sendCommand('left')" style="width: 100%; height: 100%">-30 sec</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<button type="button" class="btn btn-lg btn-danger" ng-click="sendCommand('down')" style="width: 100%; height: 100%">-10 min</button>
+				</div>
+			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-4">
-			<p>More stuff!!! yay</p>
+		<div class="col-sm-4">
+			<button type="button" class="btn btn-lg btn-success" ng-click="sendCommand('p')" style="width: 100%; height: 100%">Play/Pause</button>
+		</div>
+		<div class="col-sm-4">
+			<div class="row">
+				<div class="col-md-12">
+					<button type="button" class="btn btn-lg btn-primary" ng-click="sendCommand(2)" style="width: 100%; height: 100%">+</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<button type="button" class="btn btn-lg btn-primary" ng-click="sendCommand('>')" style="width: 100%; height: 100%">&gt;&gt;</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<button type="button" class="btn btn-lg btn-danger" ng-click="sendCommand('right')" style="width: 100%; height: 100%">+30 sec</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<button type="button" class="btn btn-lg btn-danger" ng-click="sendCommand('up')" style="width: 100%; height: 100%">+10 min</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
