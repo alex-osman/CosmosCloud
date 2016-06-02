@@ -89,6 +89,13 @@ app.get('/api/movies', function(req, res) {
 	});
 })
 
+app.get('/api/SQL/movies', function(req, res) {
+	connection.query('SELECT * from movies;', function(err, rows, field) {
+		if (err) throw err;
+		res.send(rows);
+	})
+})
+
 app.get('/api/pictures', function(req, res) {
 	var dir = fs.readdirSync(picture_folder)
 	res.send(dir)
@@ -176,7 +183,7 @@ app.post('/del/:typename/:fname', function(req, res) {
 		});
 })
 
-app.listen(80, '0.0.0.0');
+app.listen(8000, '0.0.0.0');
 console.log("App listening on port 8000");
 fs.appendFile('log.output', 'Time: ' + (new Date()), function(err) {
 	console.log("Recorded")
