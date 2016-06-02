@@ -1,14 +1,13 @@
 angular
 	.module("cosmosCloud")
 	.controller("ledgerCtrl", ["$scope", "$http","$route", "$rootScope", function($scope, $http, $route, $rootScope) {
-		console.log($rootScope.user.name)
 		$scope.post = {
-			User: $rootScope.user.name,
+			User: $rootScope.user.name.split(" ")[0],
 			Date: new Date(),
 			Description: "",
 			Cost: 0,
 		}
-		$scope.users = ['Alex Osman', 'Ian Hunter', 'Jody Salani', 'Wil Schade', 'Jon Galuchie', 'Daniel Siper']
+		$scope.users = ['Alex', 'Ian', 'Jody', 'Wil', 'Jon', 'Daniel']
 		$scope.entries = [];
 		$http.get("/SQL").success(function(data) {
 			$scope.entries = data;
