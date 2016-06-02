@@ -1,8 +1,11 @@
 angular
 	.module("cosmosCloud")
 	.controller("ledgerCtrl", ["$scope", "$http","$route", "$rootScope", function($scope, $http, $route, $rootScope) {
+		var name = "null"
+		if ($rootScope.user.name.split(" "))
+			name = $rootScope.user.name.split(" ")[0]
 		$scope.post = {
-			User: $rootScope.user.name.split(" ")[0],
+			User: name,
 			Date: new Date(),
 			Description: "",
 			Cost: 0,
