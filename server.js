@@ -108,26 +108,26 @@ app.get('/api/docs', function(req, res) {
 })
 
 app.get('/SQL', function(req, res) {
-	connection.query('SELECT * from Transactions;', function(err, rows, field) {
-		if (err) throw err;
-		res.send(rows)
-	})
+	// connection.query('SELECT * from Transactions;', function(err, rows, field) {
+	// 	if (err) throw err;
+	// 	res.send(rows)
+	// })
 })
 
 app.post('/SQL/Transactions', function(req, res) {
-	connection.query('INSERT INTO Transactions SET ?', req.body, function(err, result) {
-		console.log(err)
-		console.log(result)
-		res.send("ok");
-	})
+	// connection.query('INSERT INTO Transactions SET ?', req.body, function(err, result) {
+	// 	console.log(err)
+	// 	console.log(result)
+	// 	res.send("ok");
+	// })
 })
 
 app.get('/SQL/remove/:id', function(req, res) {
-	connection.query('DELETE from Transactions where idtablename=' + req.params.id +';', function(err, result) {
-		console.log(err)
-		console.log(result)
-		res.send("ok")
-	})
+	// connection.query('DELETE from Transactions where idtablename=' + req.params.id +';', function(err, result) {
+	// 	console.log(err)
+	// 	console.log(result)
+	// 	res.send("ok")
+	// })
 })
 
 

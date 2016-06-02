@@ -1,8 +1,9 @@
 angular
 	.module("cosmosCloud")
-	.controller("ledgerCtrl", ["$scope", "$http","$route", function($scope, $http, $route) {
+	.controller("ledgerCtrl", ["$scope", "$http","$route", "$rootScope", function($scope, $http, $route, $rootScope) {
+		console.log($rootScope.user.name)
 		$scope.post = {
-			User: "null",
+			User: $rootScope.user.name,
 			Date: new Date(),
 			Description: "",
 			Cost: 0,

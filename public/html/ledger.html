@@ -43,9 +43,7 @@
 		<div class="col-md-4">
 			<form class="form-inline well">
 				<label class="control-label">Name: </label><br>
-				<select class="form-control" ng-model="post.User">
-					<option ng-repeat="user in users | orderBy: 'toString()'">{{user}}</option>
-				</select>
+				<input type="text" class="form-control" ng-model="post.User">
 				<br><br>
 				<label class="control-label">Date: </label><br>
 				<input type="date" class="form-control" ng-model="post.Date"></input>

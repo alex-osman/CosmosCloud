@@ -9,11 +9,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script><!-- load angular -->
 </head>
 	<body>
-		<!--<style type="text/css">
-			body {
-				background-image: url("Assets/Movies/cosmos.jpg")
-			}
-		</style>-->
 		<div ng-controller="mainCtrl"> 
 			<ul class="nav nav-tabs">
 				<li role="presentation" ng-class="{active: isActive('/home')}"><a href="#/home">Home</a></li>
@@ -21,6 +16,11 @@
 				<li role="presentation" ng-class="{active: isActive('/pictures')}"><a href="#/pictures">Pictures</a></li>
 				<li role="presentation" ng-class="{active: isActive('/docs')}"><a href="#/docs">Documents</a></li>
 				<li role="presentation" ng-class="{active: isActive('/ledger')}"><a href="#/ledger">Ledger</a></li>
+				<li role="presentation" ng-class="{active: isActive('/remote')}"><a href="#/remote">Remote</a></li>
+
+				<li ng-if="apiMe.name" ng-click="logout()" role="presentation" class="pull-right"><a>Logout</a></li>
+				<li ng-if="apiMe.name" role="presentation" class="pull-right"><a>{{apiMe.name}}</a></li>
+				<li ng-if="!apiMe.name" ng-click="login()" role="presentation" class="pull-right"><a>Login</a></li>
 			</ul>
 		</div>
 		<div ng-view>
@@ -31,12 +31,14 @@
 	<script src="/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 	<script src="/bower_components/videogular/videogular.js"></script>
 	<script src="/bower_components/videogular-controls/vg-controls.js"></script>
+	<script src="/bower_components/angular-easyfb/src/angular-easyfb.js"</script>
 	<script src="/bower_components/videogular-overlay-play/vg-overlay-play.js"></script>
 	<script src="/bower_components/videogular-poster/vg-poster.js"></script>
-
+	<script src="js/dist/angular-cookies.js"></script>
 	<script src="js/controllers/mainCtrl.js"></script>
 	<script src="js/controllers/homeCtrl.js"></script>
 	<script src="js/controllers/ledgerCtrl.js"></script>
+	<script src="js/controllers/remoteCtrl.js"></script>
 	<script src="js/controllers/movieUploadCtrl.js"></script>
 	<script src="js/controllers/docUploadCtrl.js"></script>
 	<script src="js/controllers/pictureUploadCtrl.js"></script>

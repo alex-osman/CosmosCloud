@@ -1,7 +1,11 @@
 angular
-	.module("cosmosCloud", ['ngRoute', 'angularFileUpload', 'ngSanitize'])
-	.config(['$routeProvider', '$locationProvider', '$sceDelegateProvider', function($routeProvider, $locationProvider, $sceDelegateProvider) {
+	.module("cosmosCloud", ['ngRoute', 'angularFileUpload', 'ngSanitize', 'ezfb', 'ngCookies'])
+	.config(['$routeProvider', '$locationProvider', '$sceDelegateProvider', 'ezfbProvider', function($routeProvider, $locationProvider, $sceDelegateProvider, ezfbProvider) {
 		$sceDelegateProvider.resourceUrlWhitelist(['self']);
+
+		ezfbProvider.setInitParams({
+			appId: '1563639673932807'
+		})
 
 		$routeProvider
 			.when('/home', {
@@ -28,6 +32,9 @@ angular
 			.when('/ledger', {
 				templateUrl: '/html/ledger.html'
 			})
+			.when('/remote', {
+				templateUrl: '/html/remote.html'
+			})
 			.otherwise({ redirectTo: '/home'});
 	}])
 	.filter('bytes', function() {
@@ -39,11 +46,52 @@ angular
 			return (bytes / Math.pow(1024, Math.floor(number))).toFixed(precision) +  ' ' + units[number];
 		}
 	})
-	.controller("mainCtrl", ['$scope', '$http', '$location', function($scope, $http, $location) {
+	.controller("mainCtrl", ['$scope', '$http', '$location', 'ezfb', '$cookies', '$rootScope', function($scope, $http, $location, ezfb, $cookies, $rootScope) {
+		$rootScope.user = {};
+		updateLoginStatus(updateApiMe);
+
+		$scope.login = function() {
+			ezfb.login(function (res) {
+				if (res.authResponse) {
+					updateLoginStatus(updateApiMe);
+				}
+			}, {scope: 'email,user_likes,public_profile'});
+		};
+
+		$scope.logout = function() {
+			ezfb.logout(function() {
+				updateLoginStatus(updateApiMe)
+			})
+		}
+
+
+		function updateLoginStatus(more) {
+			ezfb.getLoginStatus(function(res) {
+				$scope.loginStatus = res;
+				(more || angular.noop)();
+			})
+		}
+
+		function updateApiMe() {
+			ezfb.api('/me', function(res) {
+				$scope.apiMe = res;
+				$rootScope.user.name = res.name
+				if (res.error)
+					$cookies.remove("name");
+				else {
+					$cookies.put("name", res.name);
+				}
+			})
+		}
+
 		$scope.isActive = function(viewLocation) {
 			var active = (viewLocation === $location.path());
 			return active;
 		};
+		$scope.changePage = function(page) {
+			$location.path('/' + page);
+		}
+
 		$scope.movieUploadPage = function() {
 			$location.path("/movieUpload")
 		}
