@@ -13,9 +13,9 @@ var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
 	password: 'patsword',
-	database: 'test'
+	database: 'cosmos'
 });
-connection.connect()
+//connection.connect()
 var movie_folder = "public/assets/Movies/"
 var picture_folder = "public/assets/pictures/"
 var doc_folder = "public/assets/docs/"
@@ -108,14 +108,15 @@ app.get('/api/docs', function(req, res) {
 })
 
 app.get('/SQL', function(req, res) {
-	connection.query('SELECT * from Transactions;', function(err, rows, field) {
+	connection.query('SELECT * from ledger;', function(err, rows, field) {
 		if (err) throw err;
 		res.send(rows)
 	})
 })
 
 app.post('/SQL/Transactions', function(req, res) {
-	connection.query('INSERT INTO Transactions SET ?', req.body, function(err, result) {
+	var post = req.body;
+	connection.query('INSERT INTO ledger SET ?', post, function(err, result) {
 		console.log(err)
 		console.log(result)
 		res.send("ok");
@@ -123,7 +124,7 @@ app.post('/SQL/Transactions', function(req, res) {
 })
 
 app.get('/SQL/remove/:id', function(req, res) {
-	connection.query('DELETE from Transactions where idtablename=' + req.params.id +';', function(err, result) {
+	connection.query('DELETE from ledger where ID=' + req.params.id +';', function(err, result) {
 		console.log(err)
 		console.log(result)
 		res.send("ok")
@@ -131,7 +132,7 @@ app.get('/SQL/remove/:id', function(req, res) {
 })
 
 
-app.listen(8000, '0.0.0.0');
+app.listen(80, '0.0.0.0');
 console.log("App listening on port 8000");
 fs.appendFile('log.output', 'Time: ' + (new Date()), function(err) {
 	console.log("Recorded")

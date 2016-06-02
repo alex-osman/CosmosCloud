@@ -6,7 +6,6 @@ angular
 			Date: new Date(),
 			Description: "",
 			Cost: 0,
-			idtablename: (new Date().getTime())
 		}
 		$scope.users = ['Alex', 'Ian', 'Jody', 'Wil', 'Jon', 'Dan']
 		$scope.entries = [];
@@ -34,12 +33,12 @@ angular
 			return -1 *(spent - ($scope.total()/6))
 		}
 		$scope.submitForm = function() {
-			$http.post("/SQL/Transactions", $scope.post, function() {
+			$http.post("/SQL/Transactions", $scope.post).success( function() {
 				$route.reload();
 			})
 		}
 		$scope.remove = function(entry) {
-			$http.get("/SQL/remove/" + entry.idtablename).success(function(data) {
+			$http.get("/SQL/remove/" + entry.ID).success(function(data) {
 				$route.reload();
 			})
 		}

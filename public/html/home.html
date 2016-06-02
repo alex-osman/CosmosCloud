@@ -1,9 +1,12 @@
 <div ng-controller="homeCtrl">
 	<div class="container">
 		<div class="row">
-			{{sql}}
-			<div class="col-md-12" style="background-color: black">
-				<img src="http://nk.moep.org/pics/desktops/cosmos/helix-nebula.jpg" style="max-width: 100%">
+			<div class="col-md-12">
+				<div style="background-color: rgba(255, 255, 255, .83)">
+					<p><img ng-src="{{icon}}">
+					{{weather}}, {{temp}}&nbsp;&#8457;</p>
+				</div>
+				<img src="/assets/pictures/cosmos.jpg" style="max-width: 100%">
 			</div>
 		</div>
 	</div>
