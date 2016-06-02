@@ -15,7 +15,7 @@ var connection = mysql.createConnection({
 	password: 'patsword',
 	database: 'cosmos'
 });
-//connection.connect()
+connection.connect()
 var movie_folder = "public/assets/Movies/"
 var picture_folder = "public/assets/pictures/"
 var doc_folder = "public/assets/docs/"
