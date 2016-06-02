@@ -108,6 +108,7 @@ app.get('/api/docs', function(req, res) {
 })
 
 app.get('/SQL', function(req, res) {
+<<<<<<< HEAD
 	connection.query('SELECT * from ledger;', function(err, rows, field) {
 		if (err) throw err;
 		res.send(rows)
@@ -129,6 +130,28 @@ app.get('/SQL/remove/:id', function(req, res) {
 		console.log(result)
 		res.send("ok")
 	})
+=======
+	// connection.query('SELECT * from Transactions;', function(err, rows, field) {
+	// 	if (err) throw err;
+	// 	res.send(rows)
+	// })
+})
+
+app.post('/SQL/Transactions', function(req, res) {
+	// connection.query('INSERT INTO Transactions SET ?', req.body, function(err, result) {
+	// 	console.log(err)
+	// 	console.log(result)
+	// 	res.send("ok");
+	// })
+})
+
+app.get('/SQL/remove/:id', function(req, res) {
+	// connection.query('DELETE from Transactions where idtablename=' + req.params.id +';', function(err, result) {
+	// 	console.log(err)
+	// 	console.log(result)
+	// 	res.send("ok")
+	// })
+>>>>>>> 5cad98c967cfe7d741c71c0c66d6e867d1370eeb
 })
 
 
