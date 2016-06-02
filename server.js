@@ -128,6 +128,7 @@ app.get('/api/remote/open/:movie', function(req, res) {
 	console.log("Starting up: " + movie);
 	//Check if movie exists
 	//Check if omxplayer is already runnning
+	child = exec('pkill -f omxplayer');
 	fs.writeFile('FIFO', '', function(err){});
 	omxplayer = exec('omxplayer ./public/assets/Movies/' + movie + ' < FIFO')
 	res.send("okay");
@@ -147,6 +148,10 @@ app.get('/api/remote/:command', function(req, res) {
 			break;
 		case 'left':
 			command = "$'\e'[D"
+			break;
+		case 'q':
+			exec('pkill -f omxplayer')
+			return;
 			break;
 	}
 
