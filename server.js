@@ -66,17 +66,6 @@ app.post('/uploadDoc', multipartMiddleware, function(req, res) {
 	res.send("ok")
 });
 
-app.post('/del/:typename/:fname', function(req, res) {
-	console.log("Deleting " + req.params.fname)
-	child = exec('rm ./public/assets/' + req.params.typename + '/' + req.params.fname, 
-		function(error, stdout, stderr) {
-			console.log('stdout: ' + stdout);
-			console.log('stderr: ' + stderr);
-			if (stderr !== "")
-				res.send(stderr)
-			else res.send("ok")
-		});
-})
 
 app.get('/api/movies', function(req, res) {
 	var movie_path = "assets/Movies/"
@@ -131,6 +120,25 @@ app.get('/SQL/remove/:id', function(req, res) {
 	})
 })
 
+app.get('/api/remote/open/:url', function(req, res) {
+	var file = req.params.url;
+	console.log("Starting up: " + file);
+	child = exec('omxplayer ' + file);
+
+
+})
+
+app.post('/del/:typename/:fname', function(req, res) {
+	console.log("Deleting " + req.params.fname)
+	child = exec('rm ./public/assets/' + req.params.typename + '/' + req.params.fname, 
+		function(error, stdout, stderr) {
+			console.log('stdout: ' + stdout);
+			console.log('stderr: ' + stderr);
+			if (stderr !== "")
+				res.send(stderr)
+			else res.send("ok")
+		});
+})
 
 app.listen(80, '0.0.0.0');
 console.log("App listening on port 8000");
