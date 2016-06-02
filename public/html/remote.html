@@ -32,12 +32,17 @@
 				<table class="table table-bordered" style="background-color: rgba(0,0,0,.02)">
 					<tr>
 						<td ng-repeat="movie in movies">
-							<a ng-click="play(movie.path)">{{movie.name}}</a>
-							<video width="80" height="60" ng-src="{{movie.path}}"></video>
+							<a ng-click="play(movie.name)">{{movie.name}}</a>
 						</td>
 					</tr>
 				</table>
 			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-12">
+			<button type="button" class="btn btn-lg btn-danger" ng-click="sendCommand('q')" style="width: 100%;">Quit</button>
 		</div>
 	</div>
 
