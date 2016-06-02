@@ -6,6 +6,7 @@ var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require('fs');
 var util = require('util'),
+			spawn = require('child_process').spawn,
 			exec = require('child_process').exec,
 			child;
 var mysql = require("mysql");
@@ -125,29 +126,19 @@ app.get('/SQL/remove/:id', function(req, res) {
 app.get('/api/remote/open/:movie', function(req, res) {
 	var movie = req.params.movie;
 	console.log("Starting up: " + movie);
-	omxplayer = spawn('omxplayer ./public/assets/Movies' + movie)
-
-
-	omxplayer.stdout.on('data', function(data) {
-		console.log('stdout: ' + data);
-	})
-	omxplayer.stderr.on('data', function(data) {
-		console.log('stderr: ' + data);
-	})
-	omxplayer.on('close', function(code) {
-		console.log('closing code: ' + code);
-	})
+	//Check if movie exists
+	fs.writeFile('FIFO', '', function(err){});
+	omxplayer = exec('omxplayer ./public/assets/Movies/' + movie + ' < FIFO')
+	res.send("okay");
 })
 
-app.get('/api/remote/info', function(req, res) {
-	console.log(omxplayer)
-	console.log(omxplayer.stdio)
-	console.log(omxplayer.stdio[0])
-	omxplayer.stdio[0] = "p";
-})
-
-app.get('/api/remote/pause', function(req, res) {
-	omxplayer.send("p")
+app.get('/api/remote/:command', function(req, res) {
+	var command = req.params.command;
+	fs.appendFile('FIFO', command, function(err) {
+		if (err) throw err;
+		console.log(command);
+		res.send("p");
+	})
 })
 
 
