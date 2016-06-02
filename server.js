@@ -20,6 +20,8 @@ var movie_folder = "public/assets/Movies/"
 var picture_folder = "public/assets/pictures/"
 var doc_folder = "public/assets/docs/"
 
+var omxplayer = null;
+
 
 
 var util = require('util'),
@@ -123,13 +125,31 @@ app.get('/SQL/remove/:id', function(req, res) {
 app.get('/api/remote/open/:movie', function(req, res) {
 	var movie = req.params.movie;
 	console.log("Starting up: " + movie);
-	child = exec('omxplayer ./public/assets/Movies/' + movie, function(err, stdout, stderr) {
-		console.log('stdout: ' + stdout);
-		console.log('stderr: ' + stderr);
-	});
+	omxplayer = spawn('omxplayer ./public/assets/Movies' + movie)
 
 
+	omxplayer.stdout.on('data', function(data) {
+		console.log('stdout: ' + data);
+	})
+	omxplayer.stderr.on('data', function(data) {
+		console.log('stderr: ' + data);
+	})
+	omxplayer.on('close', function(code) {
+		console.log('closing code: ' + code);
+	})
 })
+
+app.get('/api/remote/info', function(req, res) {
+	console.log(omxplayer)
+	console.log(omxplayer.stdio)
+	console.log(omxplayer.stdio[0])
+	omxplayer.stdio[0] = "p";
+})
+
+app.get('/api/remote/pause', function(req, res) {
+	omxplayer.send("p")
+})
+
 
 app.post('/del/:typename/:fname', function(req, res) {
 	console.log("Deleting " + req.params.fname)
