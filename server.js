@@ -120,10 +120,13 @@ app.get('/SQL/remove/:id', function(req, res) {
 	})
 })
 
-app.get('/api/remote/open/:url', function(req, res) {
-	var file = req.params.url;
-	console.log("Starting up: " + file);
-	child = exec('omxplayer ' + file);
+app.get('/api/remote/open/:movie', function(req, res) {
+	var movie = req.params.movie;
+	console.log("Starting up: " + movie);
+	child = exec('omxplayer ./public/assets/Movies/' + movie, function(err, stdout, stderr) {
+		console.log('stdout: ' + stdout);
+		console.log('stderr: ' + stderr);
+	});
 
 
 })
