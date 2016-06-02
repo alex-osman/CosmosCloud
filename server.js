@@ -127,6 +127,7 @@ app.get('/api/remote/open/:movie', function(req, res) {
 	var movie = req.params.movie;
 	console.log("Starting up: " + movie);
 	//Check if movie exists
+	//Check if omxplayer is already runnning
 	fs.writeFile('FIFO', '', function(err){});
 	omxplayer = exec('omxplayer ./public/assets/Movies/' + movie + ' < FIFO')
 	res.send("okay");
