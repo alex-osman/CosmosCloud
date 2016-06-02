@@ -6,7 +6,7 @@ angular
 			return $sce.trustAsResourceUrl(url);
 		}
 
-		$http.get('/api/movies').success(function(data){
+		$http.get('/api/sql/movies').success(function(data){
 			$scope.movies = data
 		});
 		$scope.delete = function(movie) {
