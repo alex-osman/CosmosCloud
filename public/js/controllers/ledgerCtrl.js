@@ -8,7 +8,7 @@ angular
 			Description: "",
 			Cost: 0,
 		}
-		$scope.users = ['Alex', 'Ian', 'Jody', 'Wil', 'Jon', 'Dan']
+		$scope.users = ['Alex Osman', 'Ian Hunter', 'Jody Salani', 'Wil Schade', 'Jon Galuchie', 'Daniel Siper']
 		$scope.entries = [];
 		$http.get("/SQL").success(function(data) {
 			$scope.entries = data;
