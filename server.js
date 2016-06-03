@@ -21,6 +21,7 @@ connection.connect()
 var movie_folder = "public/assets/movies/"
 var picture_folder = "public/assets/pictures/"
 var doc_folder = "public/assets/docs/"
+var music_folder = "public/assets/music/"
 
 var omxplayer = null;
 
@@ -102,6 +103,11 @@ app.get('/api/pictures', function(req, res) {
 	res.send(dir)
 })
 
+app.get('/api/music', function(req, res) {
+	var dir = fs.readdirSync(music_folder)
+	res.send(dir)
+})
+
 app.get('/api/docs', function(req, res) {
 	var dir = fs.readdirSync(doc_folder)
 	res.send(dir)
@@ -138,6 +144,17 @@ app.get('/SQL/remove/:id', function(req, res) {
 		console.log(result)
 		res.send("ok")
 	})
+})
+
+app.get('/api/remote/music/:song', function(req, res) {
+	var song = req.params.song
+	console.log("Starting up song: " + song);
+
+	child = exec('pkill -f omxplayer');
+	fs.writeFile('FIFO', '', function(err){});
+	console.log('omxplayer -o local ' + music_folder + song.replace(/ /g, '\\ ') + ' < FIFO ' )
+	omxplayer = exec('omxplayer -o local ' + music_folder + song.replace(/ /g, '\\ ') + ' < FIFO')
+	res.send("okay")
 })
 
 app.get('/api/remote/open/:movie', function(req, res) {

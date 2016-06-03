@@ -14,7 +14,7 @@
 					<th>Size</th>
 					<th>Delete</th>
 				</tr>
-				<tr ng-repeat="movie in movies">
+				<tr ng-repeat="movie in movies | orderBy: ['type', 'title']">
 					<td>
 						<img ng-src="{{movie.img}}" height="150" width="100">
 					</td>

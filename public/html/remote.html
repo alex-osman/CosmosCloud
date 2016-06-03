@@ -38,11 +38,45 @@
 	<!-- MOVIE CHOICES -->
 	<div class="row" style="padding: 40px;">
 		<div class="col-md-12">
+			<h2>Movies</h2>
 			<div class="table-responsive">
 				<table class="table table-bordered" style="background-color: rgba(0,0,0,.02)">
 					<tr>
-						<td ng-repeat="movie in movies" ng-click="play(movie.url)">
+						<td ng-repeat="movie in movies | filter:{type:0}" ng-click="play(movie.url)">
 							<img ng-src="{{movie.img}}" height="150" width="100"><br><h4>{{movie.title}}</h4>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- SHOW CHOICES -->
+	<div class="row" style="padding: 40px;">
+                <div class="col-md-12">
+                        <h2>Shows</h2>
+                        <div class="table-responsive">
+                                <table class="table table-bordered" style="background-color: rgba(0,0,0,.02)">
+                                        <tr>
+                                                <td ng-repeat="movie in movies | filter:{type:1}" ng-click="play(movie.url)">
+                                                        <img ng-src="{{movie.img}}" height="150" width="100"><br><h4>{{movie.title}}</h4>
+                                                </td>
+                                        </tr>
+                                </table>
+                        </div>
+                </div>
+        </div>
+
+	<!-- MUSIC -->
+	<div class="row" style="padding: 40px;">
+		<div class="col-md-12">
+			<h2>Music</h2>
+			<div class="table-responsive">
+				<table class="table table-bordered" style="background-color: rgba(0,0,0,.02)">
+					<tr>
+						<td ng-repeat="song in songs" ng-click="playSong(song)">
+							<span>{{song}}</span>
 						</td>
 					</tr>
 				</table>
