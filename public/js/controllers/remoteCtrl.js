@@ -2,7 +2,7 @@ angular
 	.module("cosmosCloud")
 	.controller("remoteCtrl", ["$scope", "$http","$route", function($scope, $http, $route) {
 
-		$http.get('/api/movies').success(function(data){
+		$http.get('/api/sql/movies').success(function(data){
 			$scope.movies = data
 		});
 

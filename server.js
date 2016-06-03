@@ -17,7 +17,7 @@ var connection = mysql.createConnection({
 	database: 'cosmos'
 });
 connection.connect()
-var movie_folder = "public/assets/Movies/"
+var movie_folder = "public/assets/movies/"
 var picture_folder = "public/assets/pictures/"
 var doc_folder = "public/assets/docs/"
 
@@ -183,7 +183,7 @@ app.post('/del/:typename/:fname', function(req, res) {
 		});
 })
 
-app.listen(8000, '0.0.0.0');
+app.listen(80, '0.0.0.0');
 console.log("App listening on port 8000");
 fs.appendFile('log.output', 'Time: ' + (new Date()), function(err) {
 	console.log("Recorded")
