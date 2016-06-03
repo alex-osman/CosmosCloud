@@ -122,6 +122,15 @@ app.post('/SQL/Transactions', function(req, res) {
 	})
 })
 
+app.post('/SQL/insert/movie', function(req, res) {
+	var post = req.body;
+	connection.query('INSERT INTO movies SET ?', post, function(err, result) {
+		console.log(err)
+		console.log(result)
+		res.send("ok!")
+	})
+})
+
 app.get('/SQL/remove/:id', function(req, res) {
 	connection.query('DELETE from ledger where ID=' + req.params.id +';', function(err, result) {
 		console.log(err)
