@@ -159,10 +159,10 @@ var startOmxplayer = function(url) {
 
 
 //~~~~STREAM~SONG~MUSIC~~~~
-app.get('/api/remote/stream/:stream', function(req, res) {
-	var stream = req.params.stream;
+app.post('/api/remote/stream', function(req, res) {
+	var stream = req.body.url
 	console.log("Starting stream: " + stream);
-	startOmxplayer(stream)
+	startOmxplayer("'" + stream + "'")
 	res.send("ok");
 })
 
@@ -204,7 +204,6 @@ app.get('/api/remote/:command', function(req, res) {
 
 	fs.appendFile('FIFO', command, function(err) {
 		if (err) throw err;
-		console.log(command);
 		res.send("Success");
 	})
 })

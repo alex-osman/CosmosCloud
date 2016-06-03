@@ -1,2 +1,5 @@
 node_modules
+FIFO
+log.output
+public/bower_components
 public/assets
