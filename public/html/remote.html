@@ -67,6 +67,24 @@
                         </div>
                 </div>
         </div>
+    </div>
+
+    <!-- LIVE STREAM -->
+	<div class="row" style="padding: 40px;">
+                <div class="col-md-12">
+                        <h2>Live Stream</h2>
+                        <div class="table-responsive">
+                                <table class="table table-bordered" style="background-color: rgba(0,0,0,.02)">
+                                        <tr>
+                                                <td ng-repeat="stream in streams" ng-click="playStream(stream.url)">
+                                                        <img ng-src="{{stream.img}}" height="{{stream.height}}" width="{{stream.width}}"><br><h4>{{stream.title}}</h4>
+                                                </td>
+                                        </tr>
+                                </table>
+                        </div>
+                </div>
+        </div>
+    </div>
 
 	<!-- MUSIC -->
 	<div class="row" style="padding: 40px;">

@@ -146,25 +146,37 @@ app.get('/SQL/remove/:id', function(req, res) {
 	})
 })
 
+var killOmxplayer = function() {
+	exec('pkill -f omxplayer');
+}
+
+var startOmxplayer = function(url) {
+	killOmxplayer();
+	fs.writeFile('FIFO', '', function(err) {if (err) throw err;})
+	omxplayer = exec('omxplayer -b -o local ' + url + ' < FIFO');
+}
+
+
+
+//~~~~STREAM~SONG~MUSIC~~~~
+app.get('/api/remote/stream/:stream', function(req, res) {
+	var stream = req.params.stream;
+	console.log("Starting stream: " + stream);
+	startOmxplayer(stream)
+	res.send("ok");
+})
+
 app.get('/api/remote/music/:song', function(req, res) {
 	var song = req.params.song
 	console.log("Starting up song: " + song);
-
-	child = exec('pkill -f omxplayer');
-	fs.writeFile('FIFO', '', function(err){});
-	console.log('omxplayer -o local ' + music_folder + song.replace(/ /g, '\\ ') + ' < FIFO ' )
-	omxplayer = exec('omxplayer -o local ' + music_folder + song.replace(/ /g, '\\ ') + ' < FIFO')
+	startOmxplayer(music_folder + song.replace(/ /g, '\\ '))
 	res.send("okay")
 })
 
 app.get('/api/remote/open/:movie', function(req, res) {
 	var movie = req.params.movie;
 	console.log("Starting up: " + movie);
-	//Check if movie exists
-	//Check if omxplayer is already runnning
-	child = exec('pkill -f omxplayer');
-	fs.writeFile('FIFO', '', function(err){});
-	omxplayer = exec('omxplayer -b -o local ' + movie_folder + movie + ' < FIFO')
+	startOmxplayer(movie_folder + movie)
 	res.send("okay");
 })
 
