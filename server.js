@@ -33,7 +33,7 @@ app.use(express.static(__dirname + "/public"));
 
 
 /* UPLOAD MOVIE */
-app.post('/uploadFile', multipartMiddleware, function(req, res) {
+app.post('/uploadMovie', multipartMiddleware, function(req, res) {
 	var tmp_path = req.files.file.path;
 	console.log(tmp_path);
 	var target_path = movie_folder + req.files.file.originalFilename;
@@ -137,7 +137,7 @@ app.get('/api/remote/open/:movie', function(req, res) {
 	//Check if omxplayer is already runnning
 	child = exec('pkill -f omxplayer');
 	fs.writeFile('FIFO', '', function(err){});
-	omxplayer = exec('omxplayer ./public/assets/Movies/' + movie + ' < FIFO')
+	omxplayer = exec('omxplayer ' + movie_folder + movie + ' < FIFO')
 	res.send("okay");
 })
 
