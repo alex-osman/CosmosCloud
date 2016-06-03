@@ -137,7 +137,7 @@ app.get('/api/remote/open/:movie', function(req, res) {
 	//Check if omxplayer is already runnning
 	child = exec('pkill -f omxplayer');
 	fs.writeFile('FIFO', '', function(err){});
-	omxplayer = exec('omxplayer ' + movie_folder + movie + ' < FIFO')
+	omxplayer = exec('omxplayer -b -o local ' + movie_folder + movie + ' < FIFO')
 	res.send("okay");
 })
 

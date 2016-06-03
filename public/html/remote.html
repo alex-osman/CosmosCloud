@@ -38,8 +38,8 @@
 			<div class="table-responsive">
 				<table class="table table-bordered" style="background-color: rgba(0,0,0,.02)">
 					<tr>
-						<td ng-repeat="movie in movies" ng-click="play(movie.name)">
-							<img ng-src="movie.img"><br><h4>{{movie.title}}</h4>
+						<td ng-repeat="movie in movies" ng-click="play(movie.url)">
+							<img ng-src="{{movie.img}}" height="150" width="100"><br><h4>{{movie.title}}</h4>
 						</td>
 					</tr>
 				</table>
