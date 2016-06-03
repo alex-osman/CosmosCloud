@@ -1,7 +1,8 @@
 var express	= require("express");
 var bodyParser = require('body-parser')
 var app		= express();
-app.use(bodyParser())
+app.use(bodyParser.json({limit: '5000mb'}))
+app.use(bodyParser.urlencoded({limit: '5000mb'}))
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require('fs');
