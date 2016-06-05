@@ -1,6 +1,7 @@
 angular
 	.module("cosmosCloud")
 	.controller("movieCtrl", ["$scope", "$http", '$location', '$sce', '$route', function($scope, $http, $location, $sce, $route) {
+		$scope.path = "assets/movies/";
 		$scope.message = "Movie Controller!";
 		$scope.trusted = function(url) {
 			return $sce.trustAsResourceUrl(url);

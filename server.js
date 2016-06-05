@@ -73,7 +73,7 @@ app.post('/uploadDoc', multipartMiddleware, function(req, res) {
 
 
 app.get('/api/movies', function(req, res) {
-	var movie_path = "assets/Movies/"
+	var movie_path = "assets/movies/"
 	var dir = fs.readdirSync(movie_folder)
 	var movies = [];
 	var counter = 0;
