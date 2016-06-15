@@ -14,7 +14,7 @@ angular
 				img: 'http://www.smithfieldfoods.com/images/home/packaged-brands/gwaltney-food.jpg',
 				height: "100",
 				width: "150",
-				url: "http://video-edge-499cb8.iad02.hls.ttvnw.net/hls129/food_21637037840_462956339/high/index-live.m3u8?token=id=4283276442269322084,bid=21637037840,exp=1465065918,node=video-edge-499cb8-1.iad02.hls.justin.tv,nname=video-edge-499cb8.iad02,fmt=high&sig=040eac0410ba2ee77a512ee8822cfa00c8140800"
+				url: "http://video-edge-7ea600.mia02.hls.ttvnw.net/hls-8c7420/food_21670088816_464012598/high/index-live.m3u8?token=id=7113512843583797126,bid=21670088816,exp=1465185761,node=video-edge-7ea600-1.mia02.hls.justin.tv,nname=video-edge-7ea600.mia02,fmt=high&sig=6a51d3448c24bda8e7f467e2c43ffffbf100814f"
 			},{
 				title: 'Earth',
 				img: "http://1.bp.blogspot.com/-nPiepW_h_gg/VY8kj7talsI/AAAAAAAAEzI/Al3vW23hHWQ/s1600/sun-and-earth-18505.jpg",
@@ -68,5 +68,14 @@ angular
 			$http.post('/api/remote/stream/', {"url": url}).success(function(data) {
 				console.log(data);
 			})
+		}
+	
+		$scope.twitchStream = function(channelName) {
+			$scope.status = "Loading..."
+			var channel = channelName + " ";
+			$http.get('/api/remote/twitch/' + channelName).success(function(data) {
+				console.log(data);
+				$scope.status = "Playing " + channel
+			});
 		}
 	}])

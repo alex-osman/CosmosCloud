@@ -73,7 +73,7 @@ app.post('/uploadDoc', multipartMiddleware, function(req, res) {
 
 
 app.get('/api/movies', function(req, res) {
-	var movie_path = "assets/Movies/"
+	var movie_path = "assets/movies/"
 	var dir = fs.readdirSync(movie_folder)
 	var movies = [];
 	var counter = 0;
@@ -178,6 +178,17 @@ app.get('/api/remote/open/:movie', function(req, res) {
 	console.log("Starting up: " + movie);
 	startOmxplayer(movie_folder + movie)
 	res.send("okay");
+})
+
+app.get('/api/remote/twitch/:user', function(req, res) {
+	var user = req.params.user;
+	exec('twitchurl ' + user, function(stdin, stdout, stderr) {
+		console.log(stdout)
+		var arr = stdout.split('\n');
+		var url = arr[4].substring(arr[4].indexOf('http'));
+		startOmxplayer("'" + url + "'")
+		res.send("okay " + user);
+	})
 })
 
 app.get('/api/remote/:command', function(req, res) {

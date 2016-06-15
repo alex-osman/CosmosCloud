@@ -18,8 +18,8 @@
 					<td>
 						<img ng-src="{{movie.img}}" height="150" width="100">
 					</td>
-					<td><a download="./assets/Movies/{{movie.url}}" ng-href="./assets/Movies/{{movie.url}}">{{movie.title}}</a></td>
-					<td><a ng-href="./assets/Movies/{{movie.url}}">Watch</a></td>
+					<td><a download="./assets/movies/{{movie.url}}" ng-href="./assets/Movies/{{movie.url}}">{{movie.title}}</a></td>
+					<td><a ng-href="./assets/movies/{{movie.url}}">Watch</a></td>
 					<td>{{movie.bytes | bytes}}</td>
 					<td><div ng-click="delete(movie.name)">Delete</div></td>
 				</tr>

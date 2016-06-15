@@ -83,6 +83,16 @@
                         </div>
                 </div>
         </div>
+	
+	<div class="row" style="padding: 40px;">
+		<div class="col-md-12">
+			<h3>Twitch Stream</h3>
+			<span>Twitch User: </span>
+			<input type="text" ng-model="channelName">
+			<button type="button" ng-click="twitchStream(channelName)">Watch</button>
+			<span>{{status}}</span>
+		</div>
+	</div>
 
 	<!-- MUSIC -->
 	<div class="row" style="padding: 40px;">
