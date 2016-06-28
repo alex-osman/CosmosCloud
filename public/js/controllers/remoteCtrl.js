@@ -1,6 +1,7 @@
 angular
 	.module("cosmosCloud")
 	.controller("remoteCtrl", ["$scope", "$http","$route", "$filter", function($scope, $http, $route, $filter) {
+		$scope.lights = false;
 
 		$scope.streams = [
 			{
@@ -41,7 +42,6 @@ angular
 		});
 		
 		$http.get('/api/music').success(function(data) {
-			console.log(data)
 			$scope.songs = data
 		});
 
@@ -77,5 +77,11 @@ angular
 				console.log(data);
 				$scope.status = "Playing " + channel
 			});
+		}
+
+		$scope.switchLights = function() {
+			$http.get('/smarthome/toggle').success(function(data) {
+				console.log(data);
+			})
 		}
 	}])

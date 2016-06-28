@@ -1,4 +1,5 @@
 var express	= require("express");
+var http	= require('http')
 var bodyParser = require('body-parser')
 var app		= express();
 app.use(bodyParser.json({limit: '5000mb'}))
@@ -143,6 +144,12 @@ app.get('/SQL/remove/:id', function(req, res) {
 		console.log(err)
 		console.log(result)
 		res.send("ok")
+	})
+})
+
+app.get('/smarthome/toggle', function(req, res) {
+	http.get({host:'10.0.0.90', port: 8080, path:'/'}, function(data) {
+		res.send("okay!")
 	})
 })
 
