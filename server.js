@@ -148,7 +148,19 @@ app.get('/SQL/remove/:id', function(req, res) {
 })
 
 app.get('/smarthome/toggle', function(req, res) {
-	http.get({host:'10.0.0.90', port: 8080, path:'/'}, function(data) {
+	http.get({host:'10.0.0.64', port: 8080, path:'/toggle0'}, function(data) {
+		res.send("okay!")
+	})
+})
+
+app.get('/smarthome/turnOff', function(req, res) {
+	http.get({host:'10.0.0.64', port: 8080, path:'/turnOff0'}, function(data) {
+		res.send("okay!")
+	})
+})
+
+app.get('/smarthome/turnOn', function(req, res) {
+	http.get({host:'10.0.0.64', port: 8080, path:'/turnOn0'}, function(data) {
 		res.send("okay!")
 	})
 })

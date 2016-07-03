@@ -35,6 +35,9 @@ angular
 			.when('/remote', {
 				templateUrl: '/html/remote.html'
 			})
+			.when('/control', {
+				templateUrl: '/html/control.html'
+			})
 			.otherwise({ redirectTo: '/home'});
 	}])
 	.filter('bytes', function() {
