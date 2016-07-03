@@ -31,6 +31,7 @@ var startOmxplayer = function(url) {
 	pid = exec('omxplayer -b -o local ' + url + ' < FIFO').pid;
 	currentlyPlaying = url;
 	isPlaying = true;
+	console.log("Playing " + url);
 }
 
 
@@ -90,6 +91,7 @@ app.get('/api/movie/:movie', function(req, res) {
 })
 
 app.get('/api/status', function(req, res) {
+	console.log("sending status");
 	res.send(JSON.stringify({
 		"isPlaying": isPlaying,
 		"currentlyPlaying": currentlyPlaying,
