@@ -66,12 +66,12 @@ var command = function(command) {
 	}
 
 
-	fs.appendFile('FIFO', command, function(err) {if (err) throw err; else (return "ok")})
+	fs.appendFile('FIFO', command, function(err) {if (err) throw err;})
 }
 
 app.get('/api/command/:command', function(req, res) {
 	res.send(command(req.params.command));
-}
+})
 
 app.post('/api/stream', function(req, res) {
 	startStream(req.body.url);
