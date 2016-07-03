@@ -22,6 +22,7 @@ var killOmxplayer = function() {
 	exec('pkill -f omxplayer');
 	isPlaying = false;
 	currentlyPlaying = "none"
+	pid = null;
 }
 
 var startOmxplayer = function(url) {
@@ -89,7 +90,7 @@ app.get('/api/movie/:movie', function(req, res) {
 })
 
 app.get('/api/status', function(req, res) {
-	res.send(JSON.Stringify({
+	res.send(JSON.stringify({
 		"isPlaying": isPlaying,
 		"currentlyPlaying": currentlyPlaying,
 		"pid": pid
