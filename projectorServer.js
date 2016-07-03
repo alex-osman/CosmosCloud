@@ -88,5 +88,13 @@ app.get('/api/movie/:movie', function(req, res) {
 	res.send("ok3");
 })
 
+app.get('/api/status', function(req, res) {
+	res.send(JSON.Stringify({
+		"isPlaying": isPlaying,
+		"currentlyPlaying": currentlyPlaying,
+		"pid": pid
+	}));
+})
+
 app.listen(1337, '0.0.0.0');
 console.log("Listening for traffic on 1337")
