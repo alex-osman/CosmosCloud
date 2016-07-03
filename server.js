@@ -1,10 +1,9 @@
 //This is the multi-server file
-var projector = require("./projector.js");
-projector.ip = "10.0.0.88";
 var express	= require("express");
 var http	= require('http')
+var projector = require("./projector.js");
+projector.ip = "10.0.0.88";
 projector.http = http;
-console.log(projector.getStatus());
 var bodyParser = require('body-parser')
 var app		= express();
 app.use(bodyParser.json({limit: '5000mb'}))
@@ -165,33 +164,26 @@ app.get('/smarthome/toggle', function(req, res) {
 
 //~~~~STREAM~SONG~MUSIC~~~~
 app.post('/api/remote/stream', function(req, res) {
-	var stream = req.body.url
-	console.log("Starting stream: " + stream);
-	startOmxplayer("'" + stream + "'")
+	projector.stream(req.body.url);
 	res.send("ok");
 })
 
 app.get('/api/remote/music/:song', function(req, res) {
-	var song = req.params.song
-	console.log("Starting up song: " + song);
-	startOmxplayer(music_folder + song.replace(/ /g, '\\ '))
+	projector.music(req.params.song);
 	res.send("okay")
 })
 
 app.get('/api/remote/open/:movie', function(req, res) {
-	var movie = req.params.movie;
-	console.log("Starting up: " + movie);
-	startOmxplayer(movie_folder + movie)
+	projector.movie(req.params.movie);
 	res.send("okay");
 })
 
 app.get('/api/remote/twitch/:user', function(req, res) {
 	var user = req.params.user;
 	exec('twitchurl ' + user, function(stdin, stdout, stderr) {
-		console.log(stdout)
 		var arr = stdout.split('\n');
 		var url = arr[4].substring(arr[4].indexOf('http'));
-		startOmxplayer("'" + url + "'")
+		projector.stream(url)
 		res.send("okay " + user);
 	})
 })
@@ -218,11 +210,8 @@ app.get('/api/remote/:command', function(req, res) {
 			break;
 	}
 
-
-	fs.appendFile('FIFO', command, function(err) {
-		if (err) throw err;
-		res.send("Success");
-	})
+	projector.command(command);
+	res.send("Success");
 })
 
 
