@@ -1,16 +1,13 @@
-function Projector(ip) {
-	this.ip = ip;
-	this.port = 1337;
-	console.log("Projector " + ip + " initialized")
-}
-
-Projector.prototype = {
+Projector = {
+	ip: "10.0.0.0",
+	port: "1337",
+	http: null,
 	getIp: function() {
 		return this.ip;
 	},
 	setIp: function(ip) {
 		this.ip = ip;
-	}
+	},
 	command: function(command) {
 		http.get({host: this.ip,port: this.port,path: "/api/command/" + command}, function(data) {
 			return data;
@@ -31,8 +28,8 @@ Projector.prototype = {
 			return data;
 		})
 	},
-	status: function(movie) {
-		http.get({host: this.ip, port: this.port, path: "/api/status"}, function(data) {
+	getStatus: function(movie) {
+		this.http.get({host: this.ip, port: this.port, path: "/api/status"}, function(data) {
 			return data;
 		})
 	}

@@ -1,7 +1,10 @@
 //This is the multi-server file
-var projector = require("./projector.js")("10.0.0.55");
+var projector = require("./projector.js");
+projector.ip = "10.0.0.88";
 var express	= require("express");
 var http	= require('http')
+projector.http = http;
+console.log(projector.getStatus());
 var bodyParser = require('body-parser')
 var app		= express();
 app.use(bodyParser.json({limit: '5000mb'}))
