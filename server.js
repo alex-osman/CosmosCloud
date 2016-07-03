@@ -1,5 +1,5 @@
 //This is the multi-server file
-
+var projector = require("./projector.js")("10.0.0.55");
 var express	= require("express");
 var http	= require('http')
 var bodyParser = require('body-parser')
@@ -20,7 +20,7 @@ var connection = mysql.createConnection({
 	password: 'patsword',
 	database: 'cosmos'
 });
-connection.connect()
+//connection.connect()
 var movie_folder = "public/assets/movies/"
 var picture_folder = "public/assets/pictures/"
 var doc_folder = "public/assets/docs/"
@@ -155,15 +155,8 @@ app.get('/smarthome/toggle', function(req, res) {
 	})
 })
 
-var killOmxplayer = function() {
-	exec('pkill -f omxplayer');
-}
 
-var startOmxplayer = function(url) {
-	killOmxplayer();
-	fs.writeFile('FIFO', '', function(err) {if (err) throw err;})
-	omxplayer = exec('omxplayer -b -o local ' + url + ' < FIFO');
-}
+
 
 
 
@@ -201,6 +194,7 @@ app.get('/api/remote/twitch/:user', function(req, res) {
 })
 
 app.get('/api/remote/:command', function(req, res) {
+
 	var command = req.params.command;
 	switch(command) {
 		case 'up':
