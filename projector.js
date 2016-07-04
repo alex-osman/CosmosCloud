@@ -17,9 +17,12 @@ Projector = {
 		})
 	},
 	stream: function(stream) {
-		this.http.post({host: this.ip, port: this.port, path: "/api/stream"}, {url: stream}, function(data) {
-			return data;
-		})
+		this.http.post({
+			host: this.ip, 
+			port: this.port, 
+			path: "/api/stream",
+			method: "POST",
+		}).write({url: stream}).end();
 	},
 	music: function(song) {
 		this.http.get({host: this.ip,port: this.port,path: "/api/music/" + song}, function(data) {
