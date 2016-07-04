@@ -9,22 +9,22 @@ Projector = {
 		this.ip = ip;
 	},
 	command: function(command) {
-		http.get({host: this.ip,port: this.port,path: "/api/command/" + command}, function(data) {
+		this.http.get({host: this.ip,port: this.port,path: "/api/command/" + command}, function(data) {
 			return data;
 		})
 	},
 	stream: function(stream) {
-		http.post({host: this.ip, port: this.port, path: "/api/stream"}, {url: stream}, function(data) {
+		this.http.post({host: this.ip, port: this.port, path: "/api/stream"}, {url: stream}, function(data) {
 			return data;
 		})
 	},
 	music: function(song) {
-		http.get({host: this.ip,port: this.port,path: "/api/music/" + song}, function(data) {
+		this.http.get({host: this.ip,port: this.port,path: "/api/music/" + song}, function(data) {
 			return data;
 		})	
 	},
 	movie: function(movie) {
-		http.get({host: this.ip,port: this.port,path: "/api/movie/" + movie}, function(data) {
+		this.http.get({host: this.ip,port: this.port,path: "/api/movie/" + movie}, function(data) {
 			return data;
 		})
 	},

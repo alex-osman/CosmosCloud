@@ -2,7 +2,10 @@
 var express	= require("express");
 var http	= require('http')
 var projector = require("./projector.js");
+var smarthome = require("./smarthome.js");
+smarthome.ip = "10.0.0.64";
 projector.ip = "10.0.0.88";
+smarthome.http = http;
 projector.http = http;
 var bodyParser = require('body-parser')
 var app		= express();
@@ -12,9 +15,9 @@ var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require('fs');
 var util = require('util'),
-			spawn = require('child_process').spawn,
-			exec = require('child_process').exec,
-			child;
+	spawn = require('child_process').spawn,
+	exec = require('child_process').exec,
+	child;
 var mysql = require("mysql");
 var connection = mysql.createConnection({
 	host: 'localhost',
@@ -28,13 +31,6 @@ var picture_folder = "public/assets/pictures/"
 var doc_folder = "public/assets/docs/"
 var music_folder = "public/assets/music/"
 
-var omxplayer = null;
-
-
-
-var util = require('util'),
-	exec = require('child_process').exec,
-	child;
 
 app.use(express.static(__dirname + "/public"));
 
@@ -151,10 +147,18 @@ app.get('/SQL/remove/:id', function(req, res) {
 	})
 })
 
-app.get('/smarthome/toggle', function(req, res) {
-	http.get({host:'10.0.0.90', port: 8080, path:'/'}, function(data) {
-		res.send("okay!")
-	})
+
+
+app.post('/del/:typename/:fname', function(req, res) {
+	console.log("Deleting " + req.params.fname)
+	child = exec('rm ./public/assets/' + req.params.typename + '/' + req.params.fname, 
+		function(error, stdout, stderr) {
+			console.log('stdout: ' + stdout);
+			console.log('stderr: ' + stderr);
+			if (stderr !== "")
+				res.send(stderr)
+			else res.send("ok")
+		});
 })
 
 
@@ -162,7 +166,28 @@ app.get('/smarthome/toggle', function(req, res) {
 
 
 
-//~~~~STREAM~SONG~MUSIC~~~~
+
+
+/*******************************************
+ *************** SMARTHOME *****************
+ ******************************************/
+
+app.get('/smarthome/toggle', function(req, res) {
+	res.send(smarthome.toggle(0).split(" ")[0])
+})
+
+app.get('/smarthome/turnOn', function(req, res) {
+	res.send(smarthome.turnOn(0).split(" ")[0])
+})
+
+app.get('/smarthome/turnOff', function(req, res) {
+	res.send(smarthome.turnOff(0).split(" ")[0])
+})
+
+
+/*******************************************
+ *************** PROJECTOR *****************
+ ******************************************/
 app.post('/api/remote/stream', function(req, res) {
 	projector.stream(req.body.url);
 	res.send("ok");
@@ -212,19 +237,6 @@ app.get('/api/remote/:command', function(req, res) {
 
 	projector.command(command);
 	res.send("Success");
-})
-
-
-app.post('/del/:typename/:fname', function(req, res) {
-	console.log("Deleting " + req.params.fname)
-	child = exec('rm ./public/assets/' + req.params.typename + '/' + req.params.fname, 
-		function(error, stdout, stderr) {
-			console.log('stdout: ' + stdout);
-			console.log('stderr: ' + stderr);
-			if (stderr !== "")
-				res.send(stderr)
-			else res.send("ok")
-		});
 })
 
 app.listen(80, '0.0.0.0');
