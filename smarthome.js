@@ -20,7 +20,7 @@ smartHome = {
 		return(this.http.get({host: this.ip, port: this.port, path: "/status"}, function(data) {
 			return data;
 		}))
-	}
+	},
 	turnOff: function(num) {
 		return(this.http.get({host: this.ip, port: this.port, path: "/turnOff" + num}, function(data) {
 			return data;

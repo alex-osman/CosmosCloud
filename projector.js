@@ -17,12 +17,18 @@ Projector = {
 		})
 	},
 	stream: function(stream) {
-		this.http.post({
+		console.log("trying to stream " + stream);
+		var body = JSON.stringify({url: stream});
+		var req = this.http.request({
 			host: this.ip, 
 			port: this.port, 
 			path: "/api/stream",
 			method: "POST",
-		}).write({url: stream}).end();
+			headers: {
+				"Content-Type": "application/json"
+			}
+		});
+		req.end(body)
 	},
 	music: function(song) {
 		this.http.get({host: this.ip,port: this.port,path: "/api/music/" + song}, function(data) {
