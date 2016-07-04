@@ -2,6 +2,9 @@ Projector = {
 	ip: "10.0.0.0",
 	port: "1337",
 	http: null,
+	setHttp: function(req) {
+		this.http = req;
+	},
 	getIp: function() {
 		return this.ip;
 	},

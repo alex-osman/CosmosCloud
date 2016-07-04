@@ -5,8 +5,8 @@ var projector = require("./projector.js");
 var smarthome = require("./smarthome.js");
 smarthome.ip = "10.0.0.64";
 projector.ip = "10.0.0.88";
-smarthome.http = http;
-projector.http = http;
+smarthome.setHttp(http);
+projector.setHttp(http);
 var bodyParser = require('body-parser')
 var app		= express();
 app.use(bodyParser.json({limit: '5000mb'}))

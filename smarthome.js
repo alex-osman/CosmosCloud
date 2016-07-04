@@ -2,6 +2,9 @@ smartHome = {
 	ip: "10.0.0.64",
 	port: "8080",
 	http: null,
+	setHttp: function(req) {
+		this.http = req;
+	},
 	getIp: function() {
 		return this.ip;
 	},
