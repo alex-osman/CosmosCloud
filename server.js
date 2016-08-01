@@ -172,7 +172,9 @@ var killOmxplayer = function() {
 var startOmxplayer = function(url) {
 	killOmxplayer();
 	fs.writeFile('FIFO', '', function(err) {if (err) throw err;})
-	omxplayer = exec('omxplayer -b -o local ' + url + ' < FIFO');
+	omxplayer = exec('omxplayer -b -o local ' + url + ' < FIFO', function(er, out, err) {
+		http.get({host:'10.0.0.64', port: 8080, path:'/turnOn0'}, function(data) {})
+	});
 }
 
 
@@ -193,6 +195,7 @@ app.get('/api/remote/music/:song', function(req, res) {
 })
 
 app.get('/api/remote/open/:movie', function(req, res) {
+	http.get({host:'10.0.0.64', port: 8080, path:'/turnOff0'}, function(data) {})	
 	var movie = req.params.movie;
 	console.log("Starting up: " + movie);
 	startOmxplayer(movie_folder + movie)
