@@ -229,7 +229,9 @@ app.get('/api/remote/:command', function(req, res) {
 			command = "$'\e'[D"
 			break;
 		case 'q':
-			exec('pkill -f omxplayer')
+			exec('pkill -f omxplayer', function(err, stdout, stderr) {
+				res.send("Killed");
+			});
 			return;
 			break;
 	}
