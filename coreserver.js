@@ -18,7 +18,8 @@ var connection = mysql.createConnection({
 connection.connect()
 app.use(express.static(__dirname + "/public"));
 
-/*THEATRE SETUP*/
+/*THEATRE*/
+/*THEATRE INITIALIZATION*/
 var theatres = require('./theatre.js')
 theatres.init(http);
 theatres.add('10.0.0.12', 1337, 'Bedroom');
@@ -34,12 +35,13 @@ var getRequest = function(url, num, callback) {
 			callback(body);
 		});
 	}).on('error', function(err) {
-		if (err.code == 'ECONNREFUSED') {
+		if (err.code == 'ECONNREFUSED' | err.code == 'EHOSTUNREACH') {
 			callback(err.code);
 		} else throw err;
 	})
 }
 
+/*THEATRE METHODS*/
 app.get('/getTheatres', function(req, res) {
 	res.send(theatres.names)
 })
@@ -68,6 +70,8 @@ app.get('/transition/:source/:target', function(req, res) {
 		console.log("1: " + videoSrc)
 		//Get the position from source
 		getRequest('/dbus/prop/Position', source, function(pos) {
+			//Kill the source
+			getRequest('/dbus/action/15', source, function(){})
 			//Play the asset on target
 			var position = pos.split(' ')[1].trim()
 			console.log("2: " + position)
@@ -76,15 +80,34 @@ app.get('/transition/:source/:target', function(req, res) {
 				//Set the position on target
 				setTimeout(function() {
 					console.log("Setting position")
-					getRequest('/dbus/player/SetPosition%20' + position, target, function(str) {
+					getRequest('/dbus/setPosition/' + position, target, function(str) {
 						console.log("Got: " + str)
 						res.send(str);
 					})					
-				}, 2000)
+				}, 2000) //Need to allow time for the process to start
+				//How to keep this consistent???
 			})
 		})
 	})
 })
+/*END THEATRE*/
+
+
+/*USERS*/
+var users = [];
+
+app.get('/users', function(req, res) {
+	res.send(users);
+})
+
+
+
+
+
+
+
+
+
 
 var port = 8000;
 app.listen(port, '0.0.0.0');
