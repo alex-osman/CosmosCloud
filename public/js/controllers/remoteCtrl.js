@@ -2,7 +2,61 @@ angular
 	.module("cosmosCloud")
 	.controller("remoteCtrl", ["$scope", "$http","$route", "$filter", function($scope, $http, $route, $filter) {
 		$scope.lights = false;
+		$scope.num = 0;
+		$scope.initialize = function() {
+			//First get array of all theatres, then set the current theatre
+			$http.get('/getTheatres').success(function(data) {
+				$scope.theatres = data;
+			})
+			$scope.playInfo();
+		}
 
+		$scope.playInfo = function() {
+			console.log("Getting play info for " + $scope.num);
+			//Get Asset
+			$http.get('/dbus/' + $scope.num + '/player/GetSource').success(function(data) {
+				$scope.source = data;
+			})
+			//Get Total Duration
+			$http.get('/dbus/' + $scope.num + '/prop/Duration').success(function(data) {
+				$scope.duration = parseInt(data.split(' ')[1]) / 1000000 / 60;
+			})
+			//Get Current Position
+			$http.get('/dbus/' + $scope.num + '/prop/Position').success(function(data) {
+				$scope.current = parseInt(data.split(' ')[1]) / 1000000 / 60;
+			})
+		}
+
+
+		$scope.setTheatre = function() {
+			$scope.num = $scope.theatres.indexOf($scope.theatre);
+			$scope.playInfo();
+		}
+
+		$scope.sendCommand = function(command) {
+			$http.get('/dbus/' + $scope.num + '/action/' + command).success(function(data) {
+				console.log(data);
+			})
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 		$scope.streams = [
 			{
 				title: 'NASA',
@@ -35,8 +89,10 @@ angular
 				width: "160",
 				url: "http://iphone-streaming.ustream.tv/uhls/14812707/streams/live/iphone/playlist.m3u8"
 			}
-		];
+		];*/
 
+
+/*
 		$http.get('/api/sql/movies').success(function(data){
 			$scope.movies = data
 		});
@@ -45,12 +101,7 @@ angular
 			$scope.songs = data
 		});
 
-		$scope.sendCommand = function(command) {
-			console.log(command)
-			$http.get('/api/remote/' + command).success(function(data) {
-				console.log(data);
-			})
-		}
+
 
 		$scope.play = function(url) {
 			$http.get('/api/remote/open/' + url).success(function(data) {
@@ -83,5 +134,5 @@ angular
 			$http.get('/smarthome/toggle').success(function(data) {
 				console.log(data);
 			})
-		}
+		}*/
 	}])

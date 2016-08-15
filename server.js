@@ -256,7 +256,7 @@ app.post('/del/:typename/:fname', function(req, res) {
 		});
 })
 
-app.listen(80, '0.0.0.0');
+app.listen(8000, '0.0.0.0');
 console.log("App listening on port 8000");
 fs.appendFile('log.output', 'Time: ' + (new Date()), function(err) {
 	console.log("Recorded")

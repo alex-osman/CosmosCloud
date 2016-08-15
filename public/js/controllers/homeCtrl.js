@@ -8,4 +8,19 @@ angular
 			$scope.temp = weather.temp_f
 			$scope.icon = "http://icons.wxug.com/i/c/k/partlycloudy.gif"
 		})
+
+		$scope.testMovie = function() {
+			$scope.data = "Loading...";
+			$http.get('/test').success(function(data) {
+				$scope.data = data;
+			})
+		}
+
+		$scope.testStatus = function() {
+			$scope.status = "Loading...";
+			$http.get('/testStatus').success(function(data) {
+				$scope.status = data;
+			})
+		}
+
 	}])
