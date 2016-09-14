@@ -100,43 +100,6 @@ app.get('/transition/:source/:target', function(req, res) {
 	})
 })
 
-/*app.get('/transition/:source/:target', function(req, res) {
-	var source = parseInt(req.params.source);
-	var target = parseInt(req.params.target);
-	console.log("Moving video from " + source + " to " + target);
-
-	//First get the asset from source
-	getRequest('/dbus/player/GetSource', source, function(videoSrc) {
-		var src = 'http://10.0.0.122:8000/'
-		console.log("Source: " + videoSrc)
-		//Get the position from source
-		getRequest('/dbus/prop/Position', source, function(pos) {
-			//Kill the source
-			getRequest('/dbus/action/15', source, function(){})
-			//Play the asset on target
-			console.log(pos);
-			var position = pos.split(' ')[1].trim()
-			console.log("2: " + position)
-			getRequest('/play/movie/' + encodeURIComponent('http://10.0.0.122:8000/assets/movies/' + videoSrc), target, function(response){
-				console.log("3: " + response)
-				//Set the position on target
-				setTimeout(function() {
-					console.log("Setting position")
-					getRequest('/dbus/setPosition/' + position, target, function(str) {
-						console.log("Got: " + str)
-						res.send(str);
-					})					
-				}, 5000) //Need to allow time for the process to start
-				//How to keep this consistent???
-			})
-		})
-	})
-})*/
-
-
-
-
-
 /*THEATRE LIVE-STREAMS*/
 var streams = [];
 
@@ -220,6 +183,26 @@ app.get('/users', function(req, res) {
 })
 /*END USERS*/
 
+
+
+/*TIMER*/
+var timer = function(callback, time) {
+	console.log("Testing: " + time + " at " + new Date());
+	if (new Date().getTime() > time.getTime()) {
+		callback()
+	} else {
+		setTimeout(function() {
+			timer(callback, time)
+		}, 3000)
+	}
+}
+
+timer(function() {
+	console.log("I AM THE ALARM!!!")
+	http.get("http://10.0.0.12:8080/on");
+}, new Date(2016, 08, 13, 23, 44, 0));
+
+/*END TIMER*/
 
 var port = 8000;
 app.listen(port, '0.0.0.0');
