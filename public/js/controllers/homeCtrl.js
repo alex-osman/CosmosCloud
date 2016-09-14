@@ -8,6 +8,18 @@ angular
 			$scope.temp = weather.temp_f
 			$scope.icon = "http://icons.wxug.com/i/c/k/partlycloudy.gif"
 		})
+		$http.get('/users').success(function(users) {
+			var time = new Date().getTime();
+			for (var i = 0; i < users.length; i++) {
+				//If it was alive in the past 5 minutes : 300000
+				var minutes = 15;
+				if (time - users[i].time < (minutes * 60000)) {
+					users[i].isAlive = true;
+				}
+			}
+			$scope.users = users;
+			console.log(users);
+		})
 
 		$scope.testMovie = function() {
 			$scope.data = "Loading...";

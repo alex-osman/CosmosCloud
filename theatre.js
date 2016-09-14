@@ -10,6 +10,18 @@ Projector = {
 			path: path
 		}
 	},
+	getPostOptions: function(path, num, postData) {
+		return {
+			host: this.getIp(num),
+			port: this.getPort(num),
+			path: path,
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				'Content-Length': Buffer.byteLength(postData)
+			}
+		};
+	},
 	getIp: function(num) {
 		return this.ips[num];
 	},

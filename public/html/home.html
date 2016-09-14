@@ -1,16 +1,21 @@
 <div ng-controller="homeCtrl">
-	<div class="container">
+	<div class="container" style="padding-top: 15px">
+		<div class="row">
+			<div class="col-md-2">
+				<p><img ng-src="{{icon}}">
+					{{weather}}, {{temp}}&nbsp;&#8457;
+				</p>
+			</div>
+			<div class="col-md-2" ng-repeat="user in users | filter:{isAlive:'true'}">
+				<figure>
+					<img ng-src="{{user.img}}" height="128" alt="{{user.Name}}"/>
+					<figcaption>{{user.Name}}</figcaption>
+				</figure>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<div style="background-color: rgba(255, 255, 255, .83)">
-					<p><img ng-src="{{icon}}">
-					{{weather}}, {{temp}}&nbsp;&#8457;</p>
-				</div>
-				<div>
-					<button type="button" ng-click="testMovie()">Play!</button>
-					<p>{{data}}</p>
-				</div>
-				<img src="/assets/pictures/cosmos.jpg" style="max-width: 100%">
+				<img src="/assets/pictures/cosmos.jpg" style="max-width: 80%">
 			</div>
 		</div>
 	</div>

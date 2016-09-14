@@ -1,6 +1,7 @@
 var express	= require("express");
 var bodyParser = require('body-parser')
 var app		= express();
+var ping = require('ping');
 //app.use(bodyParser.json({limit: '5000mb'}))
 //app.use(bodyParser.urlencoded({limit: '5000mb'}))
 var multipart = require('connect-multiparty');
@@ -73,9 +74,50 @@ app.get('/transition/:source/:target', function(req, res) {
 			//Kill the source
 			getRequest('/dbus/action/15', source, function(){})
 			//Play the asset on target
+			console.log(pos);
 			var position = pos.split(' ')[1].trim()
 			console.log("2: " + position)
-			getRequest('/playurl/' + videoSrc, target, function(response){
+			getRequest('/play/stream/' + encodeURIComponent(videoSrc), target, function(response){
+				console.log("3: " + response)
+
+
+				//Set the position on target
+				setTimeout(function() {
+					getRequest('/dbus/player/GetSource', target, function(str) {
+						console.log("target is playing: " + str);
+						
+
+						console.log("Setting position")
+						getRequest('/dbus/setPosition/' + position, target, function(str) {
+							console.log("Got: " + str)
+							res.send(str);
+						})					
+					})
+				}, 3000) //Need to allow time for the process to start
+				//How to keep this consistent???
+			})
+		})
+	})
+})
+
+/*app.get('/transition/:source/:target', function(req, res) {
+	var source = parseInt(req.params.source);
+	var target = parseInt(req.params.target);
+	console.log("Moving video from " + source + " to " + target);
+
+	//First get the asset from source
+	getRequest('/dbus/player/GetSource', source, function(videoSrc) {
+		var src = 'http://10.0.0.122:8000/'
+		console.log("Source: " + videoSrc)
+		//Get the position from source
+		getRequest('/dbus/prop/Position', source, function(pos) {
+			//Kill the source
+			getRequest('/dbus/action/15', source, function(){})
+			//Play the asset on target
+			console.log(pos);
+			var position = pos.split(' ')[1].trim()
+			console.log("2: " + position)
+			getRequest('/play/movie/' + encodeURIComponent('http://10.0.0.122:8000/assets/movies/' + videoSrc), target, function(response){
 				console.log("3: " + response)
 				//Set the position on target
 				setTimeout(function() {
@@ -84,29 +126,99 @@ app.get('/transition/:source/:target', function(req, res) {
 						console.log("Got: " + str)
 						res.send(str);
 					})					
-				}, 2000) //Need to allow time for the process to start
+				}, 5000) //Need to allow time for the process to start
 				//How to keep this consistent???
 			})
 		})
 	})
+})*/
+
+
+
+
+
+/*THEATRE LIVE-STREAMS*/
+var streams = [];
+
+app.get('/sql/livestreams', function(req, res) {
+	connection.query('SELECT * FROM Streams', function(err, rows, fields) {
+		streams = rows;
+		if (err) throw err;
+		res.send(rows);
+	})
 })
+
+/*THEATRE MOVIES*/
+app.get('/sql/movies', function(req, res) {
+	connection.query('SELECT * FROM movies', function(err, rows, fields) {
+		if (err) throw err;
+		res.send(rows);
+	})
+})
+
+app.get('/play/:num/stream/:id', function(req, res) {
+	streams.forEach(function(stream) {
+		if (stream.id == req.params.id) {
+			getRequest('/play/stream/' + encodeURIComponent(stream.url), parseInt(req.params.num), function(str) {
+				console.log(str);
+				res.send(str);
+			})
+		}
+	})
+})
+
+app.get('/play/:num/:url', function(req, res) {
+	getRequest('/play/movie/' + req.params.url, parseInt(req.params.num), function(str) {
+		console.log(str);
+		res.send(str);
+	})
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*END THEATRE*/
 
 
 /*USERS*/
 var users = [];
 
-app.get('/users', function(req, res) {
-	res.send(users);
+connection.query('SELECT * FROM Users', function(err, rows, fields) {
+	users = rows;
+	pingUsers();
 })
 
+//Pings every user in users to see if Alive or not.  Records the last time they were alive
+var pingUsers = function() {
+	users.forEach(function(host) {
+		ping.sys.probe(host.IP, function(isAlive) {
+			host.isAlive = isAlive;
+			if (isAlive) {
+				connection.query("UPDATE Users SET time='" + new Date().getTime() + "' WHERE id='" + host.id + "';", function(err, rows, fields) {
+					console.log("Added time to " + host.Name)
+				})
+			}
+		})
+	})
+	//Ping users every 30 seconds
+	setTimeout(pingUsers, 30000);
+}
 
-
-
-
-
-
-
+app.get('/users', function(req, res) {
+		res.send(users)
+})
+/*END USERS*/
 
 
 var port = 8000;
