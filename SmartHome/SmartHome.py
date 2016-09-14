@@ -98,6 +98,7 @@ class Relay(Module):
 	def turnOff(self, num):
 		self.outlets[num].turnOff()
 	def toggle(self, num):
+		print "Toggling ", num
 		self.outlets[num].toggle()
 	def flash(self, num):
 		outlet = self.outlets[num]
