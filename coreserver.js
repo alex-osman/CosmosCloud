@@ -183,6 +183,20 @@ app.get('/users', function(req, res) {
 })
 /*END USERS*/
 
+/*SHAIRPORT-SYNC*/
+
+app.get('/shairport/metadata', function(req, res) {
+	//Some object will hold information about shairport
+	var shairport = {
+		"Artist": "Default Artist",
+		"Song": "Default Song"
+	}
+	res.send(shairport)
+
+})
+
+/*END SHAIRPORT-SYNC*/
+
 
 
 /*TIMER*/
