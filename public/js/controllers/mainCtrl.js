@@ -114,5 +114,6 @@ angular
 				$scope.title = data.title
 			})
 		}
+		$scope.shairport();
 
 	}]);
