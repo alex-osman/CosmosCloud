@@ -2,13 +2,12 @@ var express	= require("express");
 var bodyParser = require('body-parser')
 var app		= express();
 var ping = require('ping');
-//app.use(bodyParser.json({limit: '5000mb'}))
-//app.use(bodyParser.urlencoded({limit: '5000mb'}))
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var fs = require('fs');
 var http = require('http');
 var	exec = require('child_process').exec;
+var Shairport = require('./shairport.js');
 var mysql = require("mysql");
 var connection = mysql.createConnection({
 	host: 'localhost',
@@ -185,15 +184,16 @@ app.get('/users', function(req, res) {
 
 /*SHAIRPORT-SYNC*/
 
-app.get('/shairport/metadata', function(req, res) {
-	//Some object will hold information about shairport
-	var shairport = {
-		"Artist": "Default Artist",
-		"Song": "Default Song"
-	}
-	//res.send(Shairport.getMetadata());
-	res.send(shairport)
 
+app.get('/shairport/metadata', function(req, res) {
+	var shairport = new Shairport();
+	shairport.getData(function() {
+		res.send({
+			title: this.title,
+			artist: this.artist,
+			album: this.album
+		})
+	})
 })
 
 /*END SHAIRPORT-SYNC*/
