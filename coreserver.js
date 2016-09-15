@@ -7,7 +7,6 @@ var multipartMiddleware = multipart();
 var fs = require('fs');
 var http = require('http');
 var	exec = require('child_process').exec;
-var Shairport = require('./shairport.js');
 var mysql = require("mysql");
 var connection = mysql.createConnection({
 	host: 'localhost',
