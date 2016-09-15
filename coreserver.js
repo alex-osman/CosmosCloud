@@ -191,6 +191,7 @@ app.get('/shairport/metadata', function(req, res) {
 		"Artist": "Default Artist",
 		"Song": "Default Song"
 	}
+	//res.send(Shairport.getMetadata());
 	res.send(shairport)
 
 })
