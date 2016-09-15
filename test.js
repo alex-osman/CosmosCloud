@@ -8,5 +8,13 @@ shairport.getData(function() {
 });
 var app = express();
 
-app.get('/metadata')
+app.get('/metadata', function(req, res) {
+	shairport.getData(function() {
+		res.send({
+			title: this.title,
+			artist: this.artist,
+			album: this.album
+		})
+	})
+})
 app.listen(8081, '0.0.0.0');
