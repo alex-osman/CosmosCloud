@@ -181,6 +181,26 @@ app.get('/users', function(req, res) {
 })
 /*END USERS*/
 
+/*SHAIRPORT*/
+
+app.get('/shairport/metadata', function(req, res) {
+	http.get('http://10.0.0.90:8081/metadata', function(response) {
+		var body = "";
+		response.on('data', function(chunk) {
+			body += chunk;
+		});
+		response.on('end', function() {
+			res.send(body);
+		});
+	}).on('error', function(err) {
+		if (err.code == 'ECONNREFUSED' | err.code == 'EHOSTUNREACH') {
+			res.send(err.code);
+		} else throw err;
+	})
+})
+
+/*END SHAIRPORT*/
+
 /*TIMER*/
 var timer = function(callback, time) {
 	console.log("Testing: " + time + " at " + new Date());

@@ -107,7 +107,7 @@ angular
 
 		/*SHAIRPORT*/
 		$scope.shairport = function() {
-			$http.get('10.0.0.90:8081/metadata').success(function(data) {
+			$http.get('/shairport/metadata').success(function(data) {
 				console.log(data);
 				$scope.artist = data.artist
 				$scope.album = data.album
