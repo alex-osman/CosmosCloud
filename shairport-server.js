@@ -1,3 +1,5 @@
+/*THE SHAIRPORT SERVER RUNS ON PORT 8081*/
+
 var express = require('express');
 function Shairport() {
 	this.artist = "none";
