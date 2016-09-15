@@ -182,24 +182,6 @@ app.get('/users', function(req, res) {
 })
 /*END USERS*/
 
-/*SHAIRPORT-SYNC*/
-
-
-app.get('/shairport/metadata', function(req, res) {
-	var shairport = new Shairport();
-	shairport.getData(function() {
-		res.send({
-			title: this.title,
-			artist: this.artist,
-			album: this.album
-		})
-	})
-})
-
-/*END SHAIRPORT-SYNC*/
-
-
-
 /*TIMER*/
 var timer = function(callback, time) {
 	console.log("Testing: " + time + " at " + new Date());
