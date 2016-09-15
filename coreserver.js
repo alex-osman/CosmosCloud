@@ -14,7 +14,7 @@ var connection = mysql.createConnection({
 	password: 'patsword',
 	database: 'cosmos'
 });
-connection.connect()
+//connection.connect()
 app.use(express.static(__dirname + "/public"));
 
 /*THEATRE*/
@@ -157,7 +157,7 @@ var users = [];
 
 connection.query('SELECT * FROM Users', function(err, rows, fields) {
 	users = rows;
-	pingUsers();
+	//pingUsers();
 })
 
 //Pings every user in users to see if Alive or not.  Records the last time they were alive
