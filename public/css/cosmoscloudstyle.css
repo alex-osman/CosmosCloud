@@ -7,3 +7,31 @@ td:active {
 	background-color: #bbe;
 	cursor: wait;
 }
+li a {
+	margin-top: 20px;
+}
+
+.shairport p, .shairport span {
+	color: #337AB7;
+	margin: 0px;
+	padding-left: 15px;
+	padding-right: 15px;
+	font-size: 12px;
+}
+
+.shairport {
+	padding: 3px;
+	padding-bottom: 5px;
+	padding-right: 20px;
+	margin-right: 5%;
+	float: right;
+	background-color: #f6f6ff;
+	
+	border-style: solid;
+	border-width: 2px;
+	border-bottom-width: 0px;
+	border-color: #337AB7;
+	border-radius: 2px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}

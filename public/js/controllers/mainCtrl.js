@@ -104,4 +104,16 @@ angular
 		$scope.homePage = function() {
 			$location.path("/home")
 		}
+
+		/*SHAIRPORT*/
+		$scope.shairport = function() {
+			$http.get('/shairport/metadata').success(function(data) {
+				console.log(data);
+				$scope.artist = data.artist
+				$scope.album = data.album
+				$scope.title = data.title
+			})
+		}
+		$scope.shairport();
+
 	}]);

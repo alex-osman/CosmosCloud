@@ -18,10 +18,11 @@
 				<li role="presentation" ng-class="{active: isActive('/docs')}"><a href="#/docs">Documents</a></li>
 				<li role="presentation" ng-class="{active: isActive('/ledger')}"><a href="#/ledger">Ledger</a></li>
 				<li role="presentation" ng-class="{active: isActive('/remote')}"><a href="#/remote">Remote</a></li>
-
-				<li ng-if="apiMe.name" ng-click="logout()" role="presentation" class="pull-right"><a>Logout</a></li>
-				<li ng-if="apiMe.name" role="presentation" class="pull-right"><a>{{apiMe.name}}</a></li>
-				<li ng-if="!apiMe.name" ng-click="login()" role="presentation" class="pull-right"><a>Login</a></li>
+				<div class="shairport">
+						<p>Song: {{title}}</p>
+						<p>Artist: {{artist}}</p>
+						<p>Album: {{album}}</p>					
+				</div>
 			</ul>
 		</div>
 		<div ng-view>
