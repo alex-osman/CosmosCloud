@@ -15,7 +15,7 @@ class myHandler(BaseHTTPRequestHandler):
 		self.send_header('Content-type', 'text/html')
 		self.end_headers()
 		print "Looking at ", self.path
-		print self.client_address
+		#print self.client_address
 		#/on0
 		#/off0
 		#/toggle0
@@ -39,7 +39,7 @@ class myHandler(BaseHTTPRequestHandler):
 			except:
 				relay.turnOff(0)
 				relay.turnOff(1)
-		elif (self.path[1:8] == "toggle_"):
+		elif (self.path[1:7] == "toggle"):
 			try:
 				if (self.path[7] == "0"):
 					relay.toggle(0)
