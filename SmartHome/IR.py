@@ -1,11 +1,13 @@
 import lirc
 sockid = lirc.init("Remote")
 import urllib2
+import time
 while 1:
 	code = lirc.nextcode()
+	print(code)
 	if len(code) < 1:
 		print("Unknown")
 	elif code[0] == 'power':
 		print(urllib2.urlopen("http://127.0.0.1:8080/toggle").read())
 	else:
-		print(code)
+		print(urllib2.urlopen("http://127.0.0.1:8080/".__add__(code[0])).read())
