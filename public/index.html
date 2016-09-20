@@ -19,9 +19,13 @@
 				<li role="presentation" ng-class="{active: isActive('/ledger')}"><a href="#/ledger">Ledger</a></li>
 				<li role="presentation" ng-class="{active: isActive('/remote')}"><a href="#/remote">Remote</a></li>
 				<div class="shairport">
+					<div class="row"><div class="col-sm-9">
 						<p>Song: {{title}}</p>
 						<p>Artist: {{artist}}</p>
 						<p>Album: {{album}}</p>					
+					</div><div class="col-sm-3">
+						<p><img ng-src="{{user.img}}" height="50"/></p>
+					</div>
 				</div>
 			</ul>
 		</div>

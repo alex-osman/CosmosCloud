@@ -163,6 +163,7 @@ connection.query('SELECT * FROM Users', function(err, rows, fields) {
 //Pings every user in users to see if Alive or not.  Records the last time they were alive
 var pingUsers = function() {
 	users.forEach(function(host) {
+		if (host.ping == 1) {
 		ping.sys.probe(host.IP, function(isAlive) {
 			host.isAlive = isAlive;
 			if (isAlive) {
@@ -171,6 +172,7 @@ var pingUsers = function() {
 				})
 			}
 		})
+		}
 	})
 	//Ping users every 30 seconds
 	setTimeout(pingUsers, 30000);
@@ -216,7 +218,7 @@ var timer = function(callback, time) {
 timer(function() {
 	console.log("I AM THE ALARM!!!")
 	http.get("http://10.0.0.12:8080/on");
-}, new Date(2016, 08, 16, 07, 44, 0));
+}, new Date(2016, 08, 19, 08, 45, 0));
 
 /*END TIMER*/
 

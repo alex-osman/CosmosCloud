@@ -104,6 +104,11 @@ angular
 		$scope.homePage = function() {
 			$location.path("/home")
 		}
+		
+		$http.get('/users').success(function(users) {
+                        $scope.users = users;
+                        console.log(users);
+                })
 
 		/*SHAIRPORT*/
 		$scope.shairport = function() {
@@ -112,6 +117,11 @@ angular
 				$scope.artist = data.artist
 				$scope.album = data.album
 				$scope.title = data.title
+				for (var i = 0; i < $scope.users.length; i++) {
+					if ($scope.users[i].IP == data.user)
+						$scope.user = $scope.users[i];
+					//do some stuff
+				}
 			})
 		}
 		$scope.shairport();
