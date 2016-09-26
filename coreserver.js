@@ -215,10 +215,10 @@ var timer = function(callback, time) {
 	}
 }
 
-timer(function() {
+/*timer(function() {
 	console.log("I AM THE ALARM!!!")
 	http.get("http://10.0.0.12:8080/on");
-}, new Date(2016, 08, 19, 08, 45, 0));
+}, new Date(2016, 08, 19, 08, 45, 0));*/
 
 /*END TIMER*/
 
