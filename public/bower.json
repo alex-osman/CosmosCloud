@@ -1,0 +1,28 @@
+{
+  "name": "public",
+  "homepage": "https://github.com/alex-osman/CosmosCloud",
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-bootstrap": "~0.14.3",
+    "angular-easyfb": "^1.5.1",
+    "angular-file-upload": "^2.2.0",
+    "angular-route": "^1.5.0",
+    "angular-scroll": "~1.0.0",
+    "bootstrap": "~3.3.5",
+    "videogular-overlay-play": "^1.4.1",
+    "videogular-controls": "^1.4.1",
+    "videogular-poster": "^1.4.1",
+    "videogular-themes-default": "^1.4.1",
+    "videogular": "^1.4.1"
+  }
+}
