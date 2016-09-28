@@ -1,11 +1,11 @@
 angular
 	.module("cosmosCloud", ['ngRoute', 'angularFileUpload', 'ngSanitize', 'ezfb', 'ngCookies', 'angular.filter'])
 	.config(['$routeProvider', '$locationProvider', '$sceDelegateProvider', 'ezfbProvider', function($routeProvider, $locationProvider, $sceDelegateProvider, ezfbProvider) {
-		$sceDelegateProvider.resourceUrlWhitelist(['self']);
+		/*$sceDelegateProvider.resourceUrlWhitelist(['self']);
 
 		ezfbProvider.setInitParams({
 			appId: '1563639673932807'
-		})
+		})*/
 
 		$routeProvider
 			.when('/home', {
@@ -51,7 +51,7 @@ angular
 	})
 	.controller("mainCtrl", ['$scope', '$http', '$location', 'ezfb', '$cookies', '$rootScope', function($scope, $http, $location, ezfb, $cookies, $rootScope) {
 		$rootScope.user = {};
-		updateLoginStatus(updateApiMe);
+		//updateLoginStatus(updateApiMe);
 
 		$scope.login = function() {
 			ezfb.login(function (res) {
@@ -106,10 +106,9 @@ angular
 		}
 		
 		$http.get('/users').success(function(users) {
-                        $scope.users = users;
-                        console.log(users);
-                })
-
+			$scope.users = users;
+		})
+		
 		/*SHAIRPORT*/
 		$scope.shairport = function() {
 			$http.get('/shairport/metadata').success(function(data) {
