@@ -12,7 +12,7 @@ angular
 		}
 		$scope.users = ['Alex', 'Ian', 'Jody', 'Wil', 'Jon', 'Daniel']
 		$scope.entries = [];
-		$http.get("/SQL").success(function(data) {
+		$http.get("/ledger/SQL").success(function(data) {
 			$scope.entries = data;
 		})
 		$scope.total = function() {
