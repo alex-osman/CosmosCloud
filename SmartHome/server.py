@@ -9,6 +9,14 @@ PORT_NUMBER = 8080
 
 #This handles HTTP Requests
 class myHandler(BaseHTTPRequestHandler):
+	def do_POST(self):
+		self.send_response(200)
+		self.send_header('Content-type', 'text/html')
+		self.end_headers()
+		print self.path
+		relay.toggle(0)
+		relay.toggle(1)
+		self.wfile.write("{status:\"" + relay.status() + "\"")
 	#GET Requests
 	def do_GET(self):
 		self.send_response(200)
