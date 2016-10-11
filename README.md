@@ -4,10 +4,11 @@ The Cosmos Cloud is a smart-home system that is used to control the home (and be
 
 ## Setup
 The `coreserver.js` file is run on the main server.  There are many modules that must be imported through npm and bower.  For 'coreserver.js' to run properly, check the following:
-*Node v.4.2 is installed
-*All npm dependencies are installed in /node_modules
-*SQL server is running on localhost:3306
-*Bower dependencies are installed in /public/bower_components
+
+* Node v.4.2 is installed
+* All npm dependencies are installed in /node_modules
+* SQL server is running on localhost:3306
+* Bower dependencies are installed in /public/bower_components
 **Note that many IP addresses are hardcoded, and will result in errors if not configured properly**
 
 
@@ -20,12 +21,12 @@ The application interacts with a sql database running on the server.  Default be
 	database: 'cosmos'
 }
 A sample database is included as the file "cosmos.sql".  To create a database locally follow these steps:
-*Download mysql
-  *Verify with `which mysql` and `which mysql.server`
-*Create user "root" with password 'patsword'
-*Start mysql with `mysql.server start`
-*Create database "cosmos" through the shell by `mysql -u root -p` and `CREATE DATABASE cosmos;`
-*Log out of mysql shell and execute the command `mysql -u root -p < cosmos.sql` to import the database from file
+* Download mysql
+  * Verify with `which mysql` and `which mysql.server`
+* Create user "root" with password 'patsword'
+* Start mysql with `mysql.server start`
+* Create database "cosmos" through the shell by `mysql -u root -p` and `CREATE DATABASE cosmos;`
+* Log out of mysql shell and execute the command `mysql -u root -p < cosmos.sql` to import the database from file
 
 
 ## To Run
