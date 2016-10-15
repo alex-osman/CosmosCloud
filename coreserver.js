@@ -213,12 +213,21 @@ var timer = function(callback, time) {
 	}
 }
 
-/*timer(function() {
-	console.log("I AM THE ALARM!!!")
-	http.get("http://10.0.0.12:8080/on");
-}, new Date(2016, 08, 19, 08, 45, 0));*/
+var runTimer = function(date) {
+	timer(function() {
+		console.log("ALARM ALARM ALARM");
+	}, date)
+}
 
-/*END TIMER*/
+app.post('/alarm/set', function(req, res) {
+	var post = req.body;
+	runTimer(post.date);
+})
+
+
+
+
+
 
 var port = 8000;
 app.listen(port, '0.0.0.0');

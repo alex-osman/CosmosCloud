@@ -38,6 +38,9 @@ angular
 			.when('/control', {
 				templateUrl: '/html/control.html'
 			})
+			.when('/alarm', {
+				templateUrl: '/html/alarm.html'
+			})
 			.otherwise({ redirectTo: '/home'});
 	}])
 	.filter('bytes', function() {
