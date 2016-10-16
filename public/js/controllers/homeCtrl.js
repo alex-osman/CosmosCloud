@@ -6,19 +6,20 @@ angular
 			$scope.time = weather.observation_epoch;
 			$scope.weather = weather.weather;
 			$scope.temp = weather.temp_f
-			$scope.icon = "http://icons.wxug.com/i/c/k/partlycloudy.gif"
+			$scope.icon = weather.icon_url;
 		})
 		$http.get('/users').success(function(users) {
 			var time = new Date().getTime();
 			for (var i = 0; i < users.length; i++) {
-				//If it was alive in the past 5 minutes : 300000
-				var minutes = 15;
-				if (time - users[i].time < (minutes * 60000)) {
+				var minutes = 25;
+				if ((time - users[i].time)/1000/60 < minutes) {
+					console.log((time - users[i].time)/1000/60 + " is less than " + minutes + " minutes, " + users[i].Name)
+					console.log(users[i].Name)
 					users[i].isAlive = true;
 				}
 			}
 			$scope.users = users;
-			//console.log(users);
+			var alex = users[0];
 		})
 
 		$scope.testMovie = function() {

@@ -162,14 +162,14 @@ connection.query('SELECT * FROM Users', function(err, rows, fields) {
 var pingUsers = function() {
 	users.forEach(function(host) {
 		if (host.ping == 1) {
-		ping.sys.probe(host.IP, function(isAlive) {
-			host.isAlive = isAlive;
-			if (isAlive) {
-				connection.query("UPDATE Users SET time='" + new Date().getTime() + "' WHERE id='" + host.id + "';", function(err, rows, fields) {
-					console.log("Added time to " + host.Name)
-				})
-			}
-		})
+			ping.sys.probe(host.IP, function(isAlive) {
+				host.isAlive = isAlive;
+				if (isAlive) {
+					connection.query("UPDATE Users SET time='" + new Date().getTime() + "' WHERE id='" + host.id + "';", function(err, rows, fields) {
+						console.log("Added time to " + host.Name)
+					})
+				}
+			})
 		}
 	})
 	//Ping users every 30 seconds
@@ -177,7 +177,11 @@ var pingUsers = function() {
 }
 
 app.get('/users', function(req, res) {
-		res.send(users)
+	connection.query('SELECT * FROM Users', function(err, rows, fields) {
+		users = rows;
+		res.send(users);
+		console.log("sent users to client");
+	})	
 })
 /*END USERS*/
 
