@@ -220,8 +220,12 @@ var timer = function(callback, time) {
 var runTimer = function(date) {
 	timer(function() {
 		console.log("ALARM ALARM ALARM");
+		http.get('http://10.0.0.65:8080/toggle0')
+		http.get('http://10.0.0.12:8080/toggle0')
 	}, date)
 }
+
+runTimer(new Date(2016, 09, 16, 9, 30, 0));
 
 app.post('/alarm/set', function(req, res) {
 	var post = req.body;
