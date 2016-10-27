@@ -56,3 +56,5 @@ Many features have been tested with proof of concept and are beginning to be imp
 *IR receiver - to control actions using existing IR remotes
 *Button - control actions
 *Amazon Dash Button - Wireless convenient button to control actions
+*To get RSSI values from linux use:
+nmcli dev wifi list | egrep "wifi1|wifi2"
