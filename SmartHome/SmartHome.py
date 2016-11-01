@@ -115,7 +115,82 @@ class Relay(Module):
 			status = status + " " +  str(self.outlets[x].getStatus())
 		return status
 
+class rgb:
+	pins = []
+	brightness = [0,0,0];
 
+	def __init__(self, pinNums):
+		for x in range(len(pinNums)):
+			Pin(pinNums[x]).turnOn
+			self.pins.append(GPIO.PWM(pinNums[x], 100))
+		self.off()
+	def __del__(self):
+		self.off()
+
+	def on(self, color):
+		if (color == "red"):
+			self.brightness[0] = 0
+		elif (color == "green"):
+			self.brightness[1] = 0
+		elif (color == "blue"):
+			self.brightness[2] = 0
+		elif (color == "white"):
+			self.brightness[0] = 0
+			self.brightness[1] = 0
+			self.brightness[2] = 0
+		self.update()
+
+	def off(self):
+		self.brightness[0] = 100
+		self.brightness[1] = 100
+		self.brightness[2] = 100
+		self.update()
+
+	def update(self):
+		self.pins[0].start(self.brightness[0])
+		self.pins[1].start(self.brightness[1])
+		self.pins[2].start(self.brightness[2])
+
+	def set(self, bright):
+		self.brightness = bright
+		self.update()
+
+	def wave(self):
+		for x in range(0, 3):
+			self.brightness[x] = 0
+			self.update()
+			time.sleep(0.25)
+			self.brightness[x] = 100
+			self.update()
+
+	def change(self, bright):
+		if (bright[0] < self.brightness[0]):
+			for x in range(self.brightness[0], bright[0], -1):
+				time.sleep(0.01)
+				self.set([x, self.brightness[1], self.brightness[2]])
+		else:
+			for x in range(self.brightness[0], bright[0]):
+				time.sleep(0.01)
+				self.set([x, self.brightness[1], self.brightness[2]])
+		
+		if (bright[1] < self.brightness[1]):
+			for x in range(self.brightness[1], bright[1], -1):
+				time.sleep(0.01)
+				self.set([self.brightness[0], x, self.brightness[2]])
+		else:
+			for x in range(self.brightness[1], bright[1]):
+				time.sleep(0.01)
+				self.set([self.brightness[0], x, self.brightness[2]])
+
+		if (bright[2] < self.brightness[2]):
+			for x in range(self.brightness[2], bright[2], -1):
+				time.sleep(0.01)
+				self.set([self.brightness[0], self.brightness[1], x])
+		else:
+			for x in range(self.brightness[2], bright[2]):
+				time.sleep(0.01)
+				self.set((self.brightness[0], self.brightness[1], x))
+		
 class Outlet:
 	pin = None
 	status = False

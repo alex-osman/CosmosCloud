@@ -18,7 +18,12 @@
 				<li role="presentation" ng-class="{active: isActive('/docs')}"><a href="#/docs">Documents</a></li>
 				<li role="presentation" ng-class="{active: isActive('/ledger')}"><a href="#/ledger">Ledger</a></li>
 				<li role="presentation" ng-class="{active: isActive('/remote')}"><a href="#/remote">Remote</a></li>
-				<div class="shairport">
+
+				<div class="pull-right" style="padding-right: 40px; padding-top: 10px">
+					<img ng-src="{{icon}}">
+						{{weather}}, {{temp}}&nbsp;&#8457;
+				</div>
+				<!-- <div class="pull-right shairport">
 					<div class="row"><div class="col-sm-9">
 						<p>Song: {{title}}</p>
 						<p>Artist: {{artist}}</p>
@@ -26,7 +31,7 @@
 					</div><div class="col-sm-3">
 						<p><img ng-src="{{user.img}}" height="50"/></p>
 					</div>
-				</div>
+				</div> -->
 			</ul>
 		</div>
 		<div ng-view>
