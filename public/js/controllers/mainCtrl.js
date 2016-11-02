@@ -38,6 +38,9 @@ angular
 			.when('/control', {
 				templateUrl: '/html/control.html'
 			})
+			.when('/alarm', {
+				templateUrl: '/html/alarm.html'
+			})
 			.otherwise({ redirectTo: '/home'});
 	}])
 	.filter('bytes', function() {
@@ -107,6 +110,14 @@ angular
 		
 		$http.get('/users').success(function(users) {
 			$scope.users = users;
+		})
+
+		$http.get('http://api.wunderground.com/api/8f3ad647b3101ad1/conditions/q/PA/Philadelphia.json').success(function (data) {
+			var weather = data.current_observation;
+			$scope.time = weather.observation_epoch;
+			$scope.weather = weather.weather;
+			$scope.temp = weather.temp_f
+			$scope.icon = weather.icon_url;
 		})
 		
 		/*SHAIRPORT*/

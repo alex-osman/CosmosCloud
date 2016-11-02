@@ -162,14 +162,14 @@ connection.query('SELECT * FROM Users', function(err, rows, fields) {
 var pingUsers = function() {
 	users.forEach(function(host) {
 		if (host.ping == 1) {
-		ping.sys.probe(host.IP, function(isAlive) {
-			host.isAlive = isAlive;
-			if (isAlive) {
-				connection.query("UPDATE Users SET time='" + new Date().getTime() + "' WHERE id='" + host.id + "';", function(err, rows, fields) {
-					console.log("Added time to " + host.Name)
-				})
-			}
-		})
+			ping.sys.probe(host.IP, function(isAlive) {
+				host.isAlive = isAlive;
+				if (isAlive) {
+					connection.query("UPDATE Users SET time='" + new Date().getTime() + "' WHERE id='" + host.id + "';", function(err, rows, fields) {
+						console.log("Added time to " + host.Name)
+					})
+				}
+			})
 		}
 	})
 	//Ping users every 30 seconds
@@ -177,7 +177,11 @@ var pingUsers = function() {
 }
 
 app.get('/users', function(req, res) {
-		res.send(users)
+	connection.query('SELECT * FROM Users', function(err, rows, fields) {
+		users = rows;
+		res.send(users);
+		console.log("sent users to client");
+	})	
 })
 /*END USERS*/
 
@@ -213,12 +217,25 @@ var timer = function(callback, time) {
 	}
 }
 
-/*timer(function() {
-	console.log("I AM THE ALARM!!!")
-	http.get("http://10.0.0.12:8080/on");
-}, new Date(2016, 08, 19, 08, 45, 0));*/
+var runTimer = function(date) {
+	timer(function() {
+		console.log("ALARM ALARM ALARM");
+		http.get('http://10.0.0.65:8080/toggle0')
+		http.get('http://10.0.0.12:8080/toggle0')
+	}, date)
+}
 
-/*END TIMER*/
+runTimer(new Date(2016, 09, 16, 9, 30, 0));
+
+app.post('/alarm/set', function(req, res) {
+	var post = req.body;
+	runTimer(post.date);
+})
+
+
+
+
+
 
 var port = 8000;
 app.listen(port, '0.0.0.0');

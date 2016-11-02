@@ -1,11 +1,6 @@
 <div ng-controller="homeCtrl">
 	<div class="container" style="padding-top: 15px">
 		<div class="row">
-			<div class="col-md-2">
-				<p><img ng-src="{{icon}}">
-					{{weather}}, {{temp}}&nbsp;&#8457;
-				</p>
-			</div>
 			<div class="col-md-2" ng-repeat="user in users | filter:{isAlive:'true'}">
 				<figure>
 					<img ng-src="{{user.img}}" height="128" alt="{{user.Name}}"/>

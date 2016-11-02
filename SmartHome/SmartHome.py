@@ -125,20 +125,26 @@ class rgb:
 			self.pins.append(GPIO.PWM(pinNums[x], 100))
 		self.off()
 	def __del__(self):
-		GPIO.cleanup()
+		self.off()
 
 	def on(self, color):
 		if (color == "red"):
-			self.change([0,100,100])
+			self.brightness[0] = 0
 		elif (color == "green"):
-			self.change([100,0,100])
+			self.brightness[1] = 0
 		elif (color == "blue"):
-			self.change([100,100,0])
+			self.brightness[2] = 0
 		elif (color == "white"):
-			self.change([0,20,0])
+			self.brightness[0] = 0
+			self.brightness[1] = 0
+			self.brightness[2] = 0
+		self.update()
 
 	def off(self):
-		self.change([100,100,100])
+		self.brightness[0] = 100
+		self.brightness[1] = 100
+		self.brightness[2] = 100
+		self.update()
 
 	def update(self):
 		self.pins[0].start(self.brightness[0])

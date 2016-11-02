@@ -13,7 +13,6 @@ Shairport.prototype.getData = function(callback) {
 		//Metadata
 		data = data.substring(data.lastIndexOf('Album Name'));
 		data = data.substring(data.indexOf('"')+1);
-		//album Name: "To All My Friends, Blood Makes The Blade Holy".
 		this.album = data.substring(0, data.indexOf('"'));
 		data = data.substring(data.indexOf('Artist'));
 		data = data.substring(data.indexOf('"')+1)
