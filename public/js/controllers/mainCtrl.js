@@ -108,10 +108,14 @@ angular
 			$location.path("/home")
 		}
 		
+		/* gets all users from database
+		 * used with metadata to determine who is playing music */
 		$http.get('/users').success(function(users) {
 			$scope.users = users;
 		})
 
+		/* Grabs weather from wunderground - don't steal my key
+		 */
 		$http.get('http://api.wunderground.com/api/8f3ad647b3101ad1/conditions/q/PA/Philadelphia.json').success(function (data) {
 			var weather = data.current_observation;
 			$scope.time = weather.observation_epoch;
@@ -120,7 +124,9 @@ angular
 			$scope.icon = weather.icon_url;
 		})
 		
-		/*SHAIRPORT*/
+		/*************SHAIRPORT************/
+		/* Uncomment for AirPlay metadata
+		/**/
 		$scope.shairport = function() {
 			$http.get('/shairport/metadata').success(function(data) {
 				console.log(data);

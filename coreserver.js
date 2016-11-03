@@ -8,6 +8,7 @@ var fs = require('fs');
 var http = require('http');
 var	exec = require('child_process').exec;
 var mysql = require("mysql");
+
 var connection = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
@@ -20,10 +21,11 @@ app.use(express.static(__dirname + "/public"));
 /*THEATRE*/
 /*THEATRE INITIALIZATION*/
 var theatres = require('./theatre.js')
-theatres.init(http);
 theatres.add('10.0.0.12', 1337, 'Bedroom');
 theatres.add('10.0.0.88', 1337, 'LivingRoom');
 
+//Encapsulate get requests to a theatre
+//TODO: Move to Theatre.js module
 var getRequest = function(url, num, callback) {
 	http.get(theatres.getOptions(url, num), function(response) {
 		var body = "";
@@ -53,13 +55,19 @@ app.get('/dbus/:num/:type/:command', function(req, res) {
 	})
 })
 
-app.get('/test', function(req, res) {
-	getRequest('/playurl/poke29.mkv', 0, function(str) {
-		console.log(str);
-		res.send(str);
-	})
-})
-
+/********************************************************
+ *
+ *	This route is to be used by the RSSI tracker
+ *	Transitions your theatre asset from 'source' to 'target'
+ *
+ *	Ex: /transition/0/1
+ *			Simpsons is playing in living room
+ *			Get asset
+ *			Get position
+ *			Shut down living room theatre
+ *			Play asset at position in bedroom theatre
+ *
+ ********************************************************/
 app.get('/transition/:source/:target', function(req, res) {
 	var source = parseInt(req.params.source);
 	var target = parseInt(req.params.target);
@@ -78,7 +86,6 @@ app.get('/transition/:source/:target', function(req, res) {
 			getRequest('/play/stream/' + encodeURIComponent(videoSrc), target, function(response){
 				console.log("3: " + response)
 
-
 				//Set the position on target
 				setTimeout(function() {
 					getRequest('/dbus/player/GetSource', target, function(str) {
@@ -91,8 +98,9 @@ app.get('/transition/:source/:target', function(req, res) {
 							res.send(str);
 						})					
 					})
-				}, 3000) //Need to allow time for the process to start
-				//How to keep this consistent???
+				}, 3000) 
+				//Need to allow 3 seconds for the process to start
+				//How to start at a given position. Dbus is for inter-process commmunication, not on start
 			})
 		})
 	})
@@ -137,7 +145,11 @@ app.get('/play/:num/:url', function(req, res) {
 
 /*END THEATRE*/
 
-/*LEDGER*/
+
+
+
+
+/*LEDGER MODULE*/
 app.get("/ledger/SQL", function(req, res) {
 	connection.query('SELECT * FROM ledger', function(err, rows, fields) {
 		if (err)
@@ -146,9 +158,9 @@ app.get("/ledger/SQL", function(req, res) {
 	})
 })
 
-
-
 /*END LEDGER*/
+
+
 
 /*USERS*/
 var users = [];
@@ -185,6 +197,10 @@ app.get('/users', function(req, res) {
 })
 /*END USERS*/
 
+
+
+
+
 /*SHAIRPORT*/
 
 app.get('/shairport/metadata', function(req, res) {
@@ -205,6 +221,9 @@ app.get('/shairport/metadata', function(req, res) {
 
 /*END SHAIRPORT*/
 
+
+
+
 /*TIMER*/
 var timer = function(callback, time) {
 	console.log("Testing: " + time + " at " + new Date());
@@ -220,18 +239,18 @@ var timer = function(callback, time) {
 var runTimer = function(date) {
 	timer(function() {
 		console.log("ALARM ALARM ALARM");
-		http.get('http://10.0.0.65:8080/toggle0')
-		http.get('http://10.0.0.12:8080/toggle0')
+		http.get('http://10.0.0.65:8080/on')
+		http.get('http://10.0.0.12:8080/on0')
 	}, date)
 }
 
-runTimer(new Date(2016, 09, 16, 9, 30, 0));
+runTimer(new Date(2016, 10, 4, 7, 30, 0));
 
 app.post('/alarm/set', function(req, res) {
 	var post = req.body;
 	runTimer(post.date);
 })
-
+/*END TIMER*/
 
 
 
