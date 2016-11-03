@@ -5,18 +5,10 @@ from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 from os import curdir, sep
 from time import time
 
-PORT_NUMBER = 8080
+PORT_NUMBER = 8081
 
 #This handles HTTP Requests
 class myHandler(BaseHTTPRequestHandler):
-	def do_POST(self):
-		self.send_response(200)
-		self.send_header('Content-type', 'text/html')
-		self.end_headers()
-		print self.path
-		relay.toggle(0)
-		relay.toggle(1)
-		self.wfile.write("{status:\"" + relay.status() + "\"")
 	#GET Requests
 	def do_GET(self):
 		self.send_response(200)
@@ -24,41 +16,33 @@ class myHandler(BaseHTTPRequestHandler):
 		self.end_headers()
 		print "Looking at ", self.path
 		#print self.client_address
-		#/on0
-		#/off0
-		#/toggle0
+		#/on
+		#/oncolor
+		#/off
 		print self.path[1:4]
 		if (self.path[1:3] == "on"):
 			try:
-				if (self.path[3] == "0"):
-					relay.turnOn(0)
+				if (self.path[3:6] == "red"):
+					rgb.on("red")
+				elif (self.path[3:8] == "green"):
+					rgb.on("green")
+				elif (self.path[3:7] == "blue"):
+					rgb.on("blue")
 				else:
-					relay.turnOn(1)
+					rgb.on("white")
 			except:
-				relay.turnOn(0)
-				relay.turnOn(1)
+				rgb.on("white")
 		elif (self.path[1:4] == "off"):
 			try:
-				print self.path[4]
-				if (self.path[4] == "0"):
-					relay.turnOff(0)
-				elif (self.path[4] == "1"):
-					relay.turnOff(1)
+				rgb.off()
 			except:
-				relay.turnOff(0)
-				relay.turnOff(1)
-		elif (self.path[1:7] == "toggle"):
-			try:
-				if (self.path[7] == "0"):
-					relay.toggle(0)
-				elif (self.path[7] == "1"):
-					relay.toggle(1)
-			except:
-				relay.toggle(0)
-				relay.toggle(1)
+				rgb.off()
 		else:
-			print "idunno"
-		self.wfile.write(relay.status())
+			red = self.path[1:3]
+			green = self.path[3:5]
+			blue = self.path[5:7]
+			rgb.change([int(red), int(green), int(blue)])
+		self.wfile.write(rgb.brightness)
 		return
 
 try:
@@ -66,9 +50,7 @@ try:
 	server = HTTPServer(('', PORT_NUMBER), myHandler)
 	print 'Started httpserver on port ' , PORT_NUMBER
 	gpio = SmartHome.Gpio()
-	relay = SmartHome.Relay([17, 27])
-	relay.wave()
-	
+	rgb = SmartHome.rgb([26, 19, 13])	
 	server.serve_forever()
 
 except KeyboardInterrupt:

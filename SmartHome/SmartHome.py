@@ -190,7 +190,7 @@ class rgb:
 			for x in range(self.brightness[2], bright[2]):
 				time.sleep(0.01)
 				self.set((self.brightness[0], self.brightness[1], x))
-		
+		self.set(bright)	
 class Outlet:
 	pin = None
 	status = False
@@ -210,4 +210,5 @@ class Outlet:
 			self.turnOff()
 		else:
 			self.turnOn()
+
 
