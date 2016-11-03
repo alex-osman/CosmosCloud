@@ -8,5 +8,12 @@
     "express": "~4.7.2",
     "multer": "^1.1.0",
     "mysql": "^2.10.2"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.1.2"
   }
 }
