@@ -3,7 +3,7 @@ var config = require('../config')
 
 module.exports = function(app) {
   //What time to do you the alarm to go off?
-  var alarmTime = new Date(2016, 10, 3, 7, 33, 20)
+  var alarmTime = new Date(2016, 10, 3, 10, 33, 20)
 
   //Allow the alarm time to be set
   app.post('/alarm/set', function(req, res) {
