@@ -1,3 +1,5 @@
+var http = require('http');
+
 module.exports = {
 	"pis": [{
 		"ip": "10.0.0.12",
@@ -17,6 +19,7 @@ module.exports = {
 		"ring": [
 			function(pi) {
 				console.log("Ring from " + pi.ip);
+        http.get('http://' + pi.ip + ':' + pi.relay.port + '/on');
 			}
 		]
 	}, {
@@ -32,6 +35,7 @@ module.exports = {
     "ring": [
       function(pi) {
         console.log("Ring1 from " + pi.ip);
+        http.get('http://' + pi.ip + ':' + pi.relay.port + '/on');
       },
       function(pi) {
         console.log("Ring2 from " + pi.ip);
