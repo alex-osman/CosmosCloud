@@ -6,25 +6,25 @@ module.exports = function(app) {
 
   //Queries your shairport for metadata
   app.get('/shairport/metadata', function(req, res) {
-    http.get("http://" + pi.ip + ":" + PORT, function(response) {
-      var body = "";
-      response.on('data', function(chunk) {
-        body += chunk;
-      });
-      response.on('end', function() {
-        res.send(body);
-      });
+    config.pis.forEach(function(pi) {
+      if (pi.shairport) {
+        http.get("http://" + pi.ip + ":" + PORT, function(response) {
+          var body = "";
+          response.on('data', function(chunk) {
+            body += chunk;
+          });
+          response.on('end', function() {
+            res.send(body);
+          });
+        })
+        .on('error', function(err) {
+          if (err.code == 'ECONNREFUSED' | err.code == 'EHOSTUNREACH') {
+            res.send(err.code);
+          } else throw err;
+        });
+      }
     })
-    .on('error', function(err) {
-      if (err.code == 'ECONNREFUSED' | err.code == 'EHOSTUNREACH') {
-        res.send(err.code);
-      } else throw err;
-    });
   })
-
-
-
-
 
   /* TEST IF SHAIRPORT (HARDWARE) MODULE IS ACTUALLY SET UP */
   console.log("Trying Shairport...");
