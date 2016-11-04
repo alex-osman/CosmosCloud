@@ -27,7 +27,6 @@ module.exports = function(app) {
   })
 
   /* TEST IF SHAIRPORT (HARDWARE) MODULE IS ACTUALLY SET UP */
-  console.log("Trying Shairport...");
   var test = http.get('http://' + config.pis[0].ip + ":" + PORT)
   test.on("error", function(err) {
     if (err.code == 'ECONNREFUSED' | err.code == 'EHOSTUNREACH') {

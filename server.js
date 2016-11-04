@@ -11,20 +11,28 @@ var mysql = require("mysql");
 
 var connection = mysql.createConnection({
 	host: 'localhost',
-	user: 'root',
+	user: 'rootz',
 	password: 'patsword',
 	database: 'cosmos'
 });
-connection.connect()
+connection.connect(function(err) {
+  if (err) {
+    console.log("Please hook up a mysql database!");
+    return;
+  } else {
+    console.log("Database connected") 
+    //Load routes with database
+    require('./routes/theatre.js')(app, connection);
+    require('./routes/ledger.js')(app, connection);
+    require('./routes/users.js')(app, connection);
+  }
+})
 
 app.use(express.static(__dirname + "/public"));
 
 //Load user routes
-require('./routes/users.js')(app, connection);
 require('./routes/shairport.js')(app);
 require('./routes/timer.js')(app);
-require('./routes/theatre.js')(app, connection);
-require('./routes/ledger.js')(app, connection);
 require('./routes/relay.js')(app);
 require('./routes/rgb.js')(app);
 
