@@ -1,5 +1,4 @@
 <div ng-controller="movieCtrl" style="margin-top: 20px">
-	<p>Not implemented on refactored project - see previous revisions</p>
 	<div class="row">
 		<div class="col-md-1">
 		</div>
@@ -9,20 +8,12 @@
 		<div class="col-md-8">
 			<table class="table table-hover table-sm">
 				<tr>
-					<th>Preview</th>
 					<th>Download</th>
-					<th>Watch Online</th>
 					<th>Delete</th>
 				</tr>
 				<tr ng-repeat="movie in movies | orderBy: ['type', 'title']">
-					<td>
-						<img ng-src="{{movie.img}}" height="150" width="100">
-					</td>
-					<td><a download="./assets/movies/{{movie.url}}" ng-href="./assets/Movies/{{movie.url}}">{{movie.title}}</a></td>
-					<td><a ng-href="./assets/movies/{{movie.url}}">Watch</a></td>
-					<!-- <td><a download="{{movie.title}}" ng-href="{{path + movie.url}}">{{movie.title}}</a></td> -->
-					<!-- <td><a ng-href="{{path + movie.url}}">Watch</a></td> -->
-					<td><div ng-click="delete(movie.name)">Delete</div></td>
+					<td><a ng-href="./assets/movies/{{movie}}">{{movie}}</a></td>
+					<td><div ng-click="delete(movie)">Delete</div></td>
 				</tr>
 			</table>
 		</div>

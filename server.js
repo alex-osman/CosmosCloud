@@ -9,18 +9,25 @@ var http = require('http');
 var	exec = require('child_process').exec;
 var mysql = require("mysql");
 
+//Configure Express app
+app.use(express.static(__dirname + "/public"));
+app.use(bodyParser.json({limit: '5000mb'}))
+app.use(bodyParser.urlencoded({limit: '5000mb'}))
+
+//Configure MySQL
 var connection = mysql.createConnection({
-	host: 'localhost',
-	user: 'rootz',
-	password: 'patsword',
-	database: 'cosmos'
+  host: 'localhost',
+  user: 'root',
+  password: 'patsword',
+  database: 'cosmos'
 });
+//Connect
 connection.connect(function(err) {
   if (err) {
     console.log("Please hook up a mysql database!");
     return;
   } else {
-    console.log("Database connected") 
+    console.log("Database connected!") 
     //Load routes with database
     require('./routes/theatre.js')(app, connection);
     require('./routes/ledger.js')(app, connection);
@@ -28,15 +35,15 @@ connection.connect(function(err) {
   }
 })
 
-app.use(express.static(__dirname + "/public"));
 
-//Load user routes
-require('./routes/shairport.js')(app);
+//Load modules
+require('./routes/fileshare.js')(app, multipartMiddleware);
 require('./routes/timer.js')(app);
+//require('./routes/rgb.js')(app);
 require('./routes/relay.js')(app);
-require('./routes/rgb.js')(app);
+require('./routes/shairport.js')(app);
 
-
+//Start server, listen to everything
 var port = 8000;
 app.listen(port, '0.0.0.0');
 console.log("App listening on port " + port);
