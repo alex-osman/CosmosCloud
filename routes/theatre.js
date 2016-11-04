@@ -140,7 +140,7 @@ module.exports = function(app, connection) {
   var test = http.get('http://10.0.0.12:1337')
   test.on("error", function(err) {
     if (err.code == 'ECONNREFUSED' | err.code == 'EHOSTUNREACH') {
-      console.log("Theatre is NOT running.");
+      //console.log("Theatre is NOT running.");
     }
   })
   test.on("response", function(data) {

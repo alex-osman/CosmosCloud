@@ -31,7 +31,7 @@ module.exports = function(app) {
   var test = http.get('http://' + config.pis[0].ip + ":" + PORT)
   test.on("error", function(err) {
     if (err.code == 'ECONNREFUSED' | err.code == 'EHOSTUNREACH') {
-      console.log("Shairport is NOT running.");
+      //console.log("Shairport is NOT running.");
     }
   })
   test.on("response", function(data) {
