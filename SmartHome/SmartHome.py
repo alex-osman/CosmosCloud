@@ -141,10 +141,7 @@ class rgb:
 		self.update()
 
 	def off(self):
-		self.brightness[0] = 100
-		self.brightness[1] = 100
-		self.brightness[2] = 100
-		self.update()
+		self.change([100,100,100])
 
 	def update(self):
 		self.pins[0].start(self.brightness[0])
