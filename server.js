@@ -39,7 +39,7 @@ connection.connect(function(err) {
 //Load modules
 require('./routes/fileshare.js')(app, multipartMiddleware);
 require('./routes/timer.js')(app);
-//require('./routes/rgb.js')(app);
+require('./routes/rgb.js')(app);
 require('./routes/relay.js')(app);
 require('./routes/shairport.js')(app);
 

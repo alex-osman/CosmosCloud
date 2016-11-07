@@ -19,6 +19,22 @@ module.exports = function(app) {
     getTemp();
     res.send("okay");
   })
+
+  app.get('/rgb/toggle', function(req, res) {
+    if (getWeather) {
+      getWeather = false;
+      config.pis.forEach(function(pi) {
+        if (pi.rgb) {
+          http.get('http://' + pi.ip + ":" + pi.rgb.port + "/off");
+        }
+      });
+      res.send("okay");
+    } else {
+      getWeather = true;
+      getTemp();
+      res.send("okay");
+    }
+  })
 }
 
 //Runs the request to api.wunderground - don't steal my api key

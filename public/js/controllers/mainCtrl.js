@@ -123,6 +123,12 @@ angular
 			$scope.temp = weather.temp_f
 			$scope.icon = weather.icon_url;
 		})
+
+		$scope.rgb = function() {
+			$http.get('/rgb/toggle').success(function(data) {
+				console.log("Good!");
+			})
+		}
 		
 		/*************SHAIRPORT************/
 		/* Uncomment for AirPlay metadata

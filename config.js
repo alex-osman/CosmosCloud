@@ -23,14 +23,19 @@ module.exports = {
 			}
 		]
 	}, {
-    "ip": "10.0.0.65",
+    "ip": "10.0.0.39",
     "name": "coffeePi",
     "room": "kitchen",
+    "rgb": {
+      port: 8081
+    },
     "relay": {
       port: 8080,
       objects: [{
         name: "Coffee Maker",
-      }]
+      }, {
+	name: "LED Lights",
+	}]
     },
     "ring": [
       function(pi) {

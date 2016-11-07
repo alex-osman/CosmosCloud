@@ -19,9 +19,12 @@
 				<li role="presentation" ng-class="{active: isActive('/ledger')}"><a href="#/ledger">Ledger</a></li>
 				<li role="presentation" ng-class="{active: isActive('/remote')}"><a href="#/remote">Remote</a></li>
 
+				<div class="pull-right" style="padding-right: 40px; padding-top: 20px">
+					<button ng-click="rgb()" class="btn btn-sm btn-default">RGB</button>
+				</div>
+
 				<div class="pull-right" style="padding-right: 40px; padding-top: 10px">
-					<img ng-src="{{icon}}">
-						{{weather}}, {{temp}}&nbsp;&#8457;
+					<img ng-src="{{icon}}">{{weather}}, {{temp}}&nbsp;&#8457;
 				</div>
 				<!-- <div class="pull-right shairport">
 					<div class="row"><div class="col-sm-9">
