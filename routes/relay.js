@@ -1,7 +1,6 @@
 var http = require('http');
-var config = require('../config');
 
-module.exports = function(app) {
+module.exports = function(app, config) {
 
 
   //Do :ACTION on #:PI on relay channel #:ID

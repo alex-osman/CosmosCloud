@@ -129,6 +129,11 @@ angular
 				console.log("Good!");
 			})
 		}
+		$scope.night = function() {
+			$http.get('/night').success(function(data) {
+				console.log(data);
+			})
+		}
 		
 		/*************SHAIRPORT************/
 		/* Uncomment for AirPlay metadata

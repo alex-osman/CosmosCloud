@@ -8,6 +8,7 @@ var fs = require('fs');
 var http = require('http');
 var	exec = require('child_process').exec;
 var mysql = require("mysql");
+var config = require('./config');
 
 //Configure Express app
 app.use(express.static(__dirname + "/public"));
@@ -38,10 +39,11 @@ connection.connect(function(err) {
 
 //Load modules
 require('./routes/fileshare.js')(app, multipartMiddleware);
-require('./routes/timer.js')(app);
-require('./routes/rgb.js')(app);
-require('./routes/relay.js')(app);
-require('./routes/shairport.js')(app);
+require('./routes/timer.js')(app, config);
+require('./routes/rgb.js')(app, config);
+require('./routes/relay.js')(app, config);
+require('./routes/shairport.js')(app, config);
+require('./routes/misc.js')(app, config);
 
 //Start server, listen to everything
 var port = 8000;

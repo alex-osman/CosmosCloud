@@ -1,13 +1,14 @@
 var http = require('http');
-var config = require('../config')
 
-module.exports = function(app) {
+module.exports = function(app, config) {
   //What time to do you the alarm to go off? - default 55 minutes
-  var alarmTime = new Date(new Date().getTime() + 1000 * 60 * 55)
+  //var alarmTime = new Date(new Date().getTime() + 1000 * 60 * 55)
+  var alarmTime = new Date(2016, 10, 8, 7, 00, 00, 0);
 
   //Allow the alarm time to be set
   app.post('/alarm/set', function(req, res) {
     alarmTime = req.body.date;
+    console.log("New alarm: " + alarmTime)
   })
   
   //Checks the alarm
@@ -21,6 +22,9 @@ module.exports = function(app) {
   //Executes when alarm goes off
   var ring = function(pis) {
     console.log("Alarm!");
+    if (config.rgb)
+      config.rgb.on();
+    
     //For every pi
     pis.forEach(function(pi) {
       //For every ring
