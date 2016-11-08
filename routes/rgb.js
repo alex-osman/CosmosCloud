@@ -99,13 +99,13 @@ var updateWeather = function(pis) {
     getTemp(pis)
   }
   //update every 15 minutes - that's how often weather underground API refreshes
-  setTimeout(function(){updateWeather(pis)}, 1*20*1000);
+  setTimeout(function(){updateWeather(pis)}, 15*60*1000);
 }
 
 
 
 var runCommand = function(pis, module, command) {
-  console.log("runCommand: " + pis.length + module + command);
+  //console.log("runCommand: " + pis.length + module + command);
   pis.forEach(function(pi) {
     if (pi[module]) {
       var q = http.get('http://' + pi.ip + ":" + pi[module].port + "/" + command);

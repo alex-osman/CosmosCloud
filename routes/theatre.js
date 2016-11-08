@@ -136,7 +136,6 @@ module.exports = function(app, connection) {
   })
 
   /* TEST IF SHAIRPORT (HARDWARE) MODULE IS ACTUALLY SET UP */
-  console.log("Trying Theatres...");
   var test = http.get('http://10.0.0.12:1337')
   test.on("error", function(err) {
     if (err.code == 'ECONNREFUSED' | err.code == 'EHOSTUNREACH') {
