@@ -102,9 +102,9 @@ class Relay(Module):
 		self.outlets[num].toggle()
 	def flash(self, num):
 		outlet = self.outlets[num]
-		outlet.turnOn()
+		outlet.toggle()
 		time.sleep(0.05)
-		outlet.turnOff()
+		outlet.toggle()
 		time.sleep(0.05)
 	def wave(self):
 		for x in range(len(self.outlets)):
