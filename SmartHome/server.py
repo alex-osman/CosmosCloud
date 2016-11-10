@@ -56,6 +56,8 @@ class myHandler(BaseHTTPRequestHandler):
 			except:
 				relay.toggle(0)
 				relay.toggle(1)
+		elif (self.path[1:5] == "wave"):
+			relay.wave()
 		else:
 			print "idunno"
 		self.wfile.write(relay.status())
