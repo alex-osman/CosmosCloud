@@ -12,6 +12,7 @@ module.exports = function(app, config) {
       runCommand(config.pis, "rgb", "off");
     }
   }
+  runCommand(config.pis, "rgb", "off");
   updateWeather(config.pis);
 
 
@@ -82,7 +83,8 @@ var getTemp = function(pis) {
         if (pi.rgb) {
           var q = http.get('http://' + pi.ip + ":" + pi.rgb.port + "/" + r + g + b);
           q.on('error', function(err) {
-            console.log("Mini error going to bed...");
+	    console.log("Error with " + pi.ip + ":" + pi.rgb.port + "/" + r + g+ b);
+	    console.log(err);
           })
         }
       })
@@ -92,6 +94,7 @@ var getTemp = function(pis) {
 
 //Initialize to true
 var getWeather = true;
+
 //Keep checking the weather and updating the light
 var updateWeather = function(pis) {
   console.log("getWeather: " + getWeather)
