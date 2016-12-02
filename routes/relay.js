@@ -2,6 +2,16 @@ var http = require('http');
 
 module.exports = function(app, config) {
 
+  config.pis.forEach(function(pi) {
+    http.get("http://" + pi.ip + ":" + pi.relay.port + "/wave", function(response) {
+      var body = '';
+      response.on('data', (d) => {body += d;});
+	response.on('end', function() {
+	  console.log(pi.ip + " is online");
+	});
+    });
+  });
+
 
   //Do :ACTION on #:PI on relay channel #:ID
   //Ex: /relay/on/0/0 - turn on pi_0's 0th channel
