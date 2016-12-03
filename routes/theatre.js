@@ -9,7 +9,7 @@ module.exports = function(app, connection) {
   //Very under construction
   //Hardcoded IPs
   theatres.add('10.0.0.12', 1337, 'Bedroom');
-  theatres.add('10.0.0.65', 1337, 'LivingRoom');
+  //theatres.add('10.0.0.39', 1337, 'LivingRoom');
 
   //Encapsulate get requests to a theatre
   //TODO: Move to Theatre.js module
@@ -23,9 +23,12 @@ module.exports = function(app, connection) {
         callback(body);
       });
     }).on('error', function(err) {
-      if (err.code == 'ECONNREFUSED' | err.code == 'EHOSTUNREACH') {
+      if (err.code == 'ECONNREFUSED' | err.code == 'EHOSTUNREACH' | err.code == 'ECONNRESET') {
         callback(err.code);
-      } else throw err;
+      } else {
+        console.log(err);
+        throw err;
+      }
     })
   }
 
@@ -34,11 +37,22 @@ module.exports = function(app, connection) {
     res.send(theatres.names)
   })
 
-  app.get('/dbus/:num/:type/:command', function(req, res) {
-    console.log('/dbus/' + req.params.type + '/' + req.params.command);
-    getRequest('/dbus/' + req.params.type + '/' + req.params.command, req.params.num, function(str) {
-      console.log(str);
-      res.send(str);
+  //Used for any dbus commands in omxplayer_dbus.sh
+  app.get('/dbus/:num/:command', function(req, res) {
+    console.log('/dbus/' + req.params.command);
+    getRequest('/api/dbus/' + req.params.command, req.params.num, function(data) {
+      if (data.length == 0)
+        res.send('success')
+      else res.send(data);
+    })
+  })
+
+  //Until 'GetSource' is figured out, just sends currentlyPlaying from Node
+  app.get('/api/getsource/:num', function(req, res) {
+    console.log("Finding source for: " + req.params.num);
+    getRequest('/api/getsource/', req.params.num, function(data) {
+      console.log(data);
+      res.send(data);
     })
   })
 
@@ -119,7 +133,8 @@ module.exports = function(app, connection) {
   app.get('/play/:num/stream/:id', function(req, res) {
     streams.forEach(function(stream) {
       if (stream.id == req.params.id) {
-        getRequest('/play/stream/' + encodeURIComponent(stream.url), parseInt(req.params.num), function(str) {
+        console.log("api/stream/" + stream.url)
+        getRequest('/api/stream/' + encodeURIComponent(stream.url), parseInt(req.params.num), function(str) {
           console.log(str);
           res.send(str);
         })
@@ -128,19 +143,19 @@ module.exports = function(app, connection) {
   })
 
   /*PLAY A MOVIE*/
-  app.get('/play/:num/:url', function(req, res) {
-    getRequest('/play/movie/' + req.params.url, parseInt(req.params.num), function(str) {
+  app.get('/play/:num/movie/:url', function(req, res) {
+    getRequest('/api/movie/' + req.params.url, parseInt(req.params.num), function(str) {
       console.log(str);
       res.send(str);
     })
   })
 
-  /* TEST IF SHAIRPORT (HARDWARE) MODULE IS ACTUALLY SET UP */
+  /* TEST IF THEATRE (HARDWARE) MODULE IS ACTUALLY SET UP */
   var test = http.get('http://10.0.0.12:1337')
   test.on("error", function(err) {
     if (err.code == 'ECONNREFUSED' | err.code == 'EHOSTUNREACH') {
-      //console.log("Theatre is NOT running.");
-    }
+      console.log("Theatre is NOT running.");
+    } else console.log("Theatre off");
   })
   test.on("response", function(data) {
     console.log("Theatre running...");

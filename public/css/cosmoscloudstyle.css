@@ -1,7 +1,9 @@
-td:hover {
+.asset-hover :hover {
 	background-color: #bbb;
 	cursor: pointer;
 }
+
+
 
 td:active {
 	background-color: #bbe;

@@ -24,8 +24,12 @@ module.exports = {
 				console.log("Ring from " + pi.ip);
         http.get('http://' + pi.ip + ':' + pi.relay.port + '/on1');
 			}
-		]
-	}, {
+		],
+    theatre: {
+      name: "Bedroom Theatre"
+    }
+	}
+  /*, {
     ip: "10.0.0.39",
     name: "coffeePi",
     room: "kitchen",
@@ -47,5 +51,5 @@ module.exports = {
         console.log("Ring2 from " + pi.ip);
       }
     ]
-  }]
+  }*/]
 }

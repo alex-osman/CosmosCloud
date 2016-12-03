@@ -6,24 +6,24 @@
 				<select ng-model="theatre" ng-options="theatre.name for theatre in theatres" ng-change="setTheatre()"></select>				
 			</p>
 			<p><strong>Playing:</strong> {{theatre.source}}</p>
-			<p>{{theatre.current | number:2}}/{{theatre.duration | number:2}}</p>
+			<p>{{theatre.current | number:2}} mins / {{theatre.duration | number:2}} mins</p>
 		</div>
 	</div>
 
 	<div class="row">
 		<!-- LEFT MENU -->
 		<div class="col-sm-4">
-			<div class="row"><div class="col-md-12"><button type="button" class="btn btn-lg btn-primary" ng-click="sendCommand(17)" style="width: 100%">Vol -</button></div></div>			
+			<div class="row"><div class="col-md-12"><button type="button" class="btn btn-lg btn-primary" ng-click="sendCommand('volumedown')" style="width: 100%">Vol -</button></div></div>			
 
-			<div class="row"><div class="col-md-12"><button type="button" class="btn btn-lg btn-primary" ng-click="sendCommand(1)" style="width: 100%">-</button></div></div>
+			<!-- <div class="row"><div class="col-md-12"><button type="button" class="btn btn-lg btn-primary" ng-click="sendCommand(1)" style="width: 100%">-</button></div></div>
 			<div class="row"><div class="col-md-12"><button type="button" class="btn btn-lg btn-primary" ng-click="sendCommand(3)" style="width: 100%; height: 100%">&lt;&lt;</button></div></div>
 			<div class="row"><div class="col-md-12"><button type="button" class="btn btn-lg btn-danger" ng-click="sendCommand(19)" style="width: 100%; height: 100%">-30 sec</button></div></div>
-			<div class="row"><div class="col-md-12"><button type="button" class="btn btn-lg btn-danger" ng-click="sendCommand(21)" style="width: 100%; height: 100%">-10 min</button></div></div>
+			<div class="row"><div class="col-md-12"><button type="button" class="btn btn-lg btn-danger" ng-click="sendCommand(21)" style="width: 100%; height: 100%">-10 min</button></div></div> -->
 		</div>
 
 		<!-- PLAY PAUSE -->
 		<div class="col-sm-4">
-			<button type="button" class="btn btn-lg btn-success" ng-click="sendCommand(16)" style="width: 100%; height: 100%">Play/Pause</button>
+			<button type="button" class="btn btn-lg btn-success" ng-click="sendCommand('toggleplay')" style="width: 100%; height: 100%">Play/Pause</button>
 			<button type="button" class="btn btn-lg btn-success" ng-click="mute(true)" style="width: 100%; height: 100%">Mute</button>
 			<button type="button" class="btn btn-lg btn-success" ng-click="mute(false)" style="width: 100%; height: 100%">Unmute</button>
 		</div>
@@ -31,80 +31,84 @@
 
 		<!-- RIGHT MENU -->
 		<div class="col-sm-4">
-			<div class="row"><div class="col-md-12"><button type="button" class="btn btn-lg btn-primary" ng-click="sendCommand(18)" style="width: 100%; height: 100%">Vol +</button></div></div>
-			<div class="row"><div class="col-md-12"><button type="button" class="btn btn-lg btn-primary" ng-click="sendCommand(2)" style="width: 100%; height: 100%">+</button></div></div>
+			<div class="row"><div class="col-md-12"><button type="button" class="btn btn-lg btn-primary" ng-click="sendCommand('volumeup')" style="width: 100%; height: 100%">Vol +</button></div></div>
+			<!-- <div class="row"><div class="col-md-12"><button type="button" class="btn btn-lg btn-primary" ng-click="sendCommand(2)" style="width: 100%; height: 100%">+</button></div></div>
 			<div class="row"><div class="col-md-12"><button type="button" class="btn btn-lg btn-primary" ng-click="sendCommand(4)" style="width: 100%; height: 100%">&gt;&gt;</button></div></div>
 			<div class="row"><div class="col-md-12"><button type="button" class="btn btn-lg btn-danger" ng-click="sendCommand(20)" style="width: 100%; height: 100%">+30 sec</button></div></div>
-			<div class="row"><div class="col-md-12"><button type="button" class="btn btn-lg btn-danger" ng-click="sendCommand(22)" style="width: 100%; height: 100%">+10 min</button></div></div>
+			<div class="row"><div class="col-md-12"><button type="button" class="btn btn-lg btn-danger" ng-click="sendCommand(22)" style="width: 100%; height: 100%">+10 min</button></div></div> -->
 		</div>
 	</div>
 
 	<!-- QUIT -->
 	<div class="row">
 		<div class="col-md-12">
-			<button type="button" class="btn btn-lg btn-danger" ng-click="sendCommand(15)" style="width: 100%;">Quit</button>
+			<button type="button" class="btn btn-lg btn-danger" ng-click="sendCommand('quit')" style="width: 100%;">Quit</button>
 		</div>
 	</div>
 
 	<!-- MOVIE CHOICES -->
-	<div class="row" style="padding: 40px;">
-		<div class="col-md-12">
-			<h2>Movies</h2>
-			<div class="table-responsive">
-				<table class="table table-bordered" style="background-color: rgba(0,0,0,.02)">
-					<tr>
-						<td ng-repeat="movie in movies | filter:{type:0} | orderBy: 'title'" ng-click="playMovie(movie.url)">
-							<img ng-src="{{movie.img}}" height="150" width="100"><br><h4>{{movie.title}}</h4>
-						</td>
-					</tr>
-				</table>
-			</div>
-		</div>
-	</div>
-
+  <div class="row" style="padding: 40px;">
+    <div class="col-md-12">
+      <h2 ng-init="hideMovies = true">Movies</h2>
+      <button class="btn btn-default" ng-click="hideMovies = !hideMovies">Display</button>
+      <div ng-if="!hideMovies" class="table-responsive">
+        <table class="table table-bordered" style="background-color: rgba(0,0,0,.02)">
+          <tr class="asset-hover">
+            <td ng-repeat="movie in movies | filter:{type:0} | orderBy: 'title'" ng-click="playMovie(movie.url)">
+              <img ng-src="{{movie.img}}" height="150" width="100"><br><h4>{{movie.title}}</h4>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
 
 	<!-- SHOW CHOICES -->
-	<div class="row" style="padding: 40px;">
-                <div class="col-md-12">
-                        <h2>Shows</h2>
-                        <div class="table-responsive" ng-repeat="show in movies | filter:{type:1} | unique:'series'" >
-				<h3>{{show.series}}</h3>
-                                <table class="table table-bordered" style="background-color: rgba(0,0,0,.02)">
-                                        <tr>
-                                                <td ng-repeat="movie in movies | filter:{series:show.series}" ng-click="play(movie.url)">
-                                                        <img ng-src="{{movie.img}}" height="150" width="100"><br><h4>{{movie.title}}</h4>
-                                                </td>
-                                        </tr>
-                                </table>
-                        </div>
-                </div>
-        </div>
+  <div class="row" style="padding: 40px;">
+    <div class="col-md-12">
 
-    <!-- LIVE STREAM -->
-	<div class="row" style="padding: 40px;">
-                <div class="col-md-12">
-                        <h2>Live Stream</h2>
-                        <div class="table-responsive">
-                                <table class="table table-bordered" style="background-color: rgba(0,0,0,.02)">
-                                        <tr>
-                                                <td ng-repeat="stream in streams | orderBy: 'title'" ng-click="playStream(stream.id)">
-                                                        <img ng-src="{{stream.img}}" height="{{stream.height}}" width="{{stream.width}}"><br><h4>{{stream.title}}</h4>
-                                                </td>
-                                        </tr>
-                                </table>
-                        </div>
-                </div>
-        </div>
+      <h2 ng-init="hideShows = true">Shows</h2>
+      <button class="btn btn-default" ng-click="hideShows = !hideShows">Display</button>
+      <div ng-if="!hideShows" class="table-responsive tv-shows">
+        <table class="table table-bordered">
+          <tr ng-repeat="show in movies | filter:{type:1} | unique:'series'">
+            <td ng-init="show.display = false">
+              <h3>{{show.series}}</h3>
+              <img ng-src="{{show.img}}" height="150" width="100"><br>
+              <button class="btn btn-default" ng-click="show.display = !show.display">Display</button>
+            </td>
+            <td ng-if="show.display">
+              <table class="table table-bordered">
+                <tr class="asset-hover" ng-repeat="movie in movies | filter:{series:show.series}" ng-click="playMovie(movie.url)">
+                  <td ng-init="show.img=movie.img">
+                    <h4>{{movie.title}}</h4>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>  
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- LIVE STREAM -->
+  <div class="row" style="padding: 40px;">
+    <div class="col-md-12">
+    <h2>Live Stream</h2>
+      <div class="table-responsive">
+        <table class="table table-bordered" style="background-color: rgba(0,0,0,.02)">
+          <tr class="asset-hover">
+            <td ng-repeat="stream in streams | orderBy: 'title'" ng-click="playStream(stream.id)">
+              <img ng-src="{{stream.img}}" height="{{stream.height}}" width="{{stream.width}}"><br><h4>{{stream.title}}</h4>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
 	
-	<div class="row" style="padding: 40px;">
-		<div class="col-md-12">
-			<h3>Twitch Stream</h3>
-			<span>Twitch User: </span>
-			<input type="text" ng-model="channelName">
-			<button type="button" ng-click="twitchStream(channelName)">Watch</button>
-			<span>{{status}}</span>
-		</div>
-	</div>
 
 	<!-- MUSIC -->
 	<div class="row" style="padding: 40px;">
@@ -112,7 +116,7 @@
 			<h2>Music</h2>
 			<div class="table-responsive">
 				<table class="table table-bordered" style="background-color: rgba(0,0,0,.02)">
-					<tr>
+					<tr class="asset-hover">
 						<td ng-repeat="song in songs" ng-click="playSong(song)">
 							<span>{{song}}</span>
 						</td>
@@ -121,6 +125,17 @@
 			</div>
 		</div>
 	</div>	
+
+  <!-- TWITCH -->
+  <div class="row" style="padding: 40px;">
+    <div class="col-md-12">
+      <h3>Twitch Stream</h3>
+      <span>Twitch User: </span>
+      <input type="text" ng-model="channelName">
+      <button type="button" ng-click="twitchStream(channelName)">Watch</button>
+      <span>{{status}}</span>
+    </div>
+  </div>
 
 	<style type="text/css">
 		/* Overwrite the default to keep the scrollbar always visible */

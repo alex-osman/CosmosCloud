@@ -1,5 +1,5 @@
 angular
-	.module("cosmosCloud", ['ngRoute', 'angularFileUpload', 'ngSanitize', 'ezfb', 'ngCookies', 'angular.filter'])
+	.module("cosmosCloud", ['ngRoute', 'angularFileUpload', 'ngSanitize', 'ezfb', 'ngCookies', 'angular.filter', 'ngMaterial', 'ngMessages'])
 	.config(['$routeProvider', '$locationProvider', '$sceDelegateProvider', 'ezfbProvider', function($routeProvider, $locationProvider, $sceDelegateProvider, ezfbProvider) {
 		/*$sceDelegateProvider.resourceUrlWhitelist(['self']);
 

@@ -1,6 +1,6 @@
 angular
 	.module("cosmosCloud")
-	.controller("remoteCtrl", ["$scope", "$http","$route", "$filter", function($scope, $http, $route, $filter) {
+	.controller("remoteCtrl", ["$scope", "$http","$route", "$filter", '$mdToast', function($scope, $http, $route, $filter, $mdToast) {
 		$scope.num = 0;
 		$scope.theatres = [];
 
@@ -31,16 +31,17 @@ angular
 		$scope.playInfo = function(i) {
 			console.log("Getting play info for " + i);
 			//Get Asset
-			$http.get('/dbus/' + i + '/player/GetSource').success(function(data) {
+			$http.get('/api/getsource/' + i).success(function(data) {
+				console.log(data)
 				$scope.theatres[i].source = data;
 			})
 			//Get Total Duration
-			$http.get('/dbus/' + i + '/prop/Duration').success(function(data) {
-				$scope.theatres[i].duration = parseInt(data.split(' ')[1]) / 1000000 / 60;
+			$http.get('/dbus/' + i + '/getduration').success(function(data) {
+				$scope.theatres[i].duration = parseInt(data.trim()) / 1000000 / 60;
 			})
 			//Get Current Position
-			$http.get('/dbus/' + i + '/prop/Position').success(function(data) {
-				$scope.theatres[i].current = parseInt(data.split(' ')[1]) / 1000000 / 60;
+			$http.get('/dbus/' + i + '/getposition').success(function(data) {
+				$scope.theatres[i].current = parseInt(data.trim()) / 1000000 / 60;
 			})
 		}
 
@@ -54,28 +55,32 @@ angular
 
 		//Commands from the html remote are sent to the server
 		$scope.sendCommand = function(command) {
-			$http.get('/dbus/' + $scope.num + '/action/' + command).success(function(data) {
-				console.log(data);
+			$http.get('/dbus/' + $scope.num + '/' + command).success(function(data) {
+				$scope.simpleToast(data)
 			})
 		}
 		$scope.mute = function(x) {
-			var method = "Unmute";
+			var method = "unmute";
 			if (x)
-				method = "Mute";
-			$http.get('/dbus/' + $scope.num + '/player/' + method).success(function(data) {
-				console.log(data);
+				method = "mute";
+			$http.get('/dbus/' + $scope.num + '/' + method).success(function(data) {
+				$scope.simpleToast(data)
 			})
 		}
 
 		$scope.playStream = function(id) {
-			$http.get('/play/' + $scope.num + '/' + 'stream/' + id).success(function(data) {
-				console.log(data);
-			});
+			var url = '/play/' + $scope.num + '/stream/' + id
+			console.log(url);
+			$http.get(url)
+			.success(function(data) {
+				$scope.simpleToast(data)
+			})
 		}
 
 		$scope.playMovie = function(url) {
-			$http.get('/play/' + $scope.num + '/' + url).success(function(data) {
+			$http.get('/play/' + $scope.num + '/movie/' + url).success(function(data) {
 				console.log(data);
+				$scope.simpleToast(data)
 			})
 		}
 
@@ -119,4 +124,16 @@ angular
 				console.log(data);
 			})
 		}*/
+
+		$scope.simpleToast = function(text) {
+			console.log("Yummy toast")
+			$mdToast.show(
+				$mdToast.simple()
+					.textContent(text)
+					.position('bottom right')
+					.capsule(true)
+					.hideDelay(1800)
+			);
+		};
+
 	}])
