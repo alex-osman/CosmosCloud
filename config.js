@@ -23,6 +23,7 @@ module.exports = {
 			function(pi) {
 				console.log("Ring from " + pi.ip);
         http.get('http://' + pi.ip + ':' + pi.relay.port + '/on1');
+        http.get('http://localhost:8000/play/0/stream/4');
 			}
 		],
     theatre: {

@@ -131,6 +131,7 @@ module.exports = function(app, connection) {
 
   /*PLAY A STREAM*/
   app.get('/play/:num/stream/:id', function(req, res) {
+    console.log(req.params.id + " " + req.params.num)
     streams.forEach(function(stream) {
       if (stream.id == req.params.id) {
         console.log("api/stream/" + stream.url)
