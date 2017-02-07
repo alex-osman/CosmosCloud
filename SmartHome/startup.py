@@ -9,7 +9,7 @@ import urllib2
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 
 #Dedicated port
-DISCOVERY_PORT = '8888'
+DISCOVERY_PORT = '8000'
 
 #Sends a request to the server
 def contactServer(coreserver):
