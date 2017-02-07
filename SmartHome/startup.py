@@ -43,6 +43,19 @@ def startServer():
 		print "Shutting down..."
 		server.socket.close()
 
+#Returns a list of all visible machines
+def getHosts():
+	try:
+		return shlex.split(subprocess.check_output("arp -a | grep -v incomplete | sed 's/^.*(//g' | sed 's/).*//g'", shell=True))
+	except:
+		print "Error finding Cosmos Cloud"
+
+def netcat(host):
+	try:
+		return subprocess.check_output("nc -zv -w 2 " + host + " " + DISCOVERY_PORT, stderr=subprocess.STDOUT, shell=True)
+	except:
+		print "Error testing ", host
+
 ### SCRIPT ###
 
 cloudFile = "coreserver"
@@ -55,17 +68,14 @@ if os.path.isfile(cloudFile):
 else:
 	print "Looking for Cloud..."
 	#Get list of hosts from `arp` with valid IPs
-	hosts = shlex.split(subprocess.check_output(
-		"arp -a | grep -v incomplete | sed 's/^.*(//g' | sed 's/).*//g'",
-		shell=True))
+	hosts = getHosts()
+	print hosts
 
 	#Check each host for DISCOVERY_PORT
 	for host in hosts:
 		try:
-			#Netcat the DISCOVER_PORT
-			ncOut = subprocess.check_output("nc -zv -w 2 " + host + " " + DISCOVERY_PORT, stderr=subprocess.STDOUT, shell=True)
-
-			if ncOut.find("succeeded!") != -1:
+			# Netcat the host and check for success
+			if netcat(host).find("succeeded!") != -1:
 				#TODO: Check that this is not a random server on DISCOVERY_PORT
 
 				print("The Cloud is located at %s" %(host))
