@@ -129,6 +129,19 @@ angular
 				console.log("Good!");
 			})
 		}
+
+		$scope.lights = function() {
+			$http.get('http://10.0.0.12:8080/toggle').success(function(data) {
+				console.log("okay");
+			})
+		}
+
+		$scope.spook = function() {
+			$http.get('http://10.0.0.12:8080/spook').success(function(data) {
+				console.log("okay");
+			})
+		}
+
 		$scope.night = function() {
 			$http.get('/night').success(function(data) {
 				console.log(data);

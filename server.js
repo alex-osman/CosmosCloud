@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({limit: '5000mb'}))
 var connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'patsword',
+  password: 'password',
   database: 'cosmos'
 });
 //Connect

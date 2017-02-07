@@ -27,13 +27,15 @@ module.exports = function(app) {
   })
 
   /* TEST IF SHAIRPORT (HARDWARE) MODULE IS ACTUALLY SET UP */
-  var test = http.get('http://' + config.pis[0].ip + ":" + PORT)
-  test.on("error", function(err) {
-    if (err.code == 'ECONNREFUSED' | err.code == 'EHOSTUNREACH') {
-      //console.log("Shairport is NOT running.");
-    }
-  })
-  test.on("response", function(data) {
-    console.log("Shairport IS running...");
-  }) 
+  if (config.pis.length > 0) {
+    var test = http.get('http://' + config.pis[0].ip + ":" + PORT)
+    test.on("error", function(err) {
+      if (err.code == 'ECONNREFUSED' | err.code == 'EHOSTUNREACH') {
+        //console.log("Shairport is NOT running.");
+      }
+    })
+    test.on("response", function(data) {
+      console.log("Shairport IS running...");
+    }) 
+  }
 }

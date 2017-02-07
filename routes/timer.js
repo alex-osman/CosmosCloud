@@ -3,7 +3,7 @@ var http = require('http');
 module.exports = function(app, config) {
   //What time to do you the alarm to go off? - default 55 minutes
   //var alarmTime = new Date(new Date().getTime() + 1000 * 60 * 45)
-  var alarmTime = new Date(2016, 11, 05, 6, 40, 00, 0);
+  var alarmTime = new Date(2017, 11, 25, 6, 40, 00, 0);
 
   //Allow the alarm time to be set
   app.post('/alarm/set', function(req, res) {

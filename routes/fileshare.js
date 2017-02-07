@@ -9,6 +9,9 @@ module.exports = function(app, multipartMiddleware) {
 
   //Saves a movie to the server
   app.post('/uploadMovie', multipartMiddleware, function(req, res) {
+    console.log(req.files)
+    console.log(req.files.file)
+
     var tmp_path = req.files.file.path;
     console.log(tmp_path)
     var target_path = movie_folder + req.files.file.originalFilename;
