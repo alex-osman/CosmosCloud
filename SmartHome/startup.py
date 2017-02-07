@@ -45,10 +45,10 @@ def startServer():
 
 ### SCRIPT ###
 
-cloudIP = "coreserver"
+cloudFile = "coreserver"
 
-if os.path.isfile(cloudIP):
-	f = open(cloudIP, 'r')
+if os.path.isfile(cloudFile):
+	f = open(cloudFile, 'r')
 	coreserver = f.read()
 	f.close()
 	contactServer(coreserver)
@@ -71,7 +71,7 @@ else:
 				print("The Cloud is located at %s" %(host))
 
 				#Write IP to file
-				f = open(cloudIP, 'w')
+				f = open(cloudFile, 'w')
 				f.write(host)
 				f.close()
 				contactServer(coreserver)
