@@ -1,5 +1,6 @@
 var express	= require("express");
 var app		= express();
+var bodyParser = require('body-parser')
 var ping = require('ping');
 var http = require('http');
 var	exec = require('child_process').exec;
@@ -8,12 +9,13 @@ var assert = require('assert');
 
 //Configure Express app
 app.use(express.static(__dirname + "/public"));
+app.use(bodyParser.json({limit: '5000mb'}))
 
 //Configure database;
 MongoClient.connect('mongodb://localhost:27017/myproject', function(err, db) {
   assert.equal(null, err);
   console.log("Mongo Connection Successful")
-  require('./routes/startup.js')(app, db);
+  require('./routes/nodes.js')(app, db);
 })
 
 //Load modules

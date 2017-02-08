@@ -1,22 +1,38 @@
 angular
 	.module("cosmosCloud")
 	.controller("homeCtrl", ["$scope", "$http", function($scope, $http) {
+		$scope.modules = ['relay', 'rgb', 'theatre']
+		$scope.nodes = [];
+		$scope.newNodes = [];
 
-		/*****************************************
-			Lists all users active in the last 15 minutes
-		*****************************************/
-		$http.get('/users').success(function(users) {
-			//Get current time
-			var time = new Date().getTime();
 
-			var minutes = 25;
-			//Mark alive if user has been seen within 25 minutes
-			for (var i = 0; i < users.length; i++)
-				if ((time - users[i].time)/1000/60 < minutes)
-					users[i].isAlive = true;
 
-			$scope.users = users;
-		});
 
-		
+
+		//Adds newNode to the database
+		$scope.configureNode = function(node) {
+			console.log(node);
+			$http.post('/api/configureNode', {node: node})
+			.success(function(data) {
+				console.log(data);
+				$scope.newNodes.splice($scope.newNodes.indexOf(node), 1);
+				$scope.nodes.push(node);
+			})
+		}
+
+
+
+		//Sets the value of $scope.nodes to all nodes
+		var getNodes = function() {
+			$http.get('/api/getNodes')
+			.success(function(data) {
+				console.log(data);
+				data.forEach(function(node) {
+					if (node.modules) {
+						$scope.nodes.push(node);
+					} else $scope.newNodes.push(node);
+				}) 
+			})
+		}
+		getNodes();
 	}])
