@@ -9,11 +9,11 @@ import urllib2
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 
 #Dedicated port
-DISCOVERY_PORT = '8000'
+DISCOVERY_PORT = os.environ['DISCOVERY_PORT']
 
 #Sends a request to the server
 def contactServer(coreserver):
-	print(urllib2.urlopen("http://" + coreserver + ":" + DISCOVERY_PORT + "/connect").read())
+	print(urllib2.urlopen("http://" + coreserver + ":" + DISCOVERY_PORT + "/api/connect").read())
 
 #Basic handler that will start modules
 class myHandler(BaseHTTPRequestHandler):
@@ -59,10 +59,10 @@ def netcat(host):
 ### SCRIPT ###
 
 cloudFile = "coreserver"
-
 if os.path.isfile(cloudFile):
 	f = open(cloudFile, 'r')
 	coreserver = f.read()
+	print coreserver
 	f.close()
 	contactServer(coreserver)
 else:
@@ -72,19 +72,20 @@ else:
 	print hosts
 
 	#Check each host for DISCOVERY_PORT
+	hostFound = False
 	for host in hosts:
 		try:
 			# Netcat the host and check for success
-			if netcat(host).find("succeeded!") != -1:
+			if not hostFound and netcat(host).find("succeeded!") != -1:
 				#TODO: Check that this is not a random server on DISCOVERY_PORT
-
+				hostFound = True
 				print("The Cloud is located at %s" %(host))
 
 				#Write IP to file
 				f = open(cloudFile, 'w')
 				f.write(host)
 				f.close()
-				contactServer(coreserver)
+				contactServer(host)
 		except:
 			pass
 		else:
