@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import subprocess
+import time
 import re
 import shlex
 import sys
@@ -66,30 +67,32 @@ if os.path.isfile(cloudFile):
 	f.close()
 	contactServer(coreserver)
 else:
-	print "Looking for Cloud..."
-	#Get list of hosts from `arp` with valid IPs
-	hosts = getHosts()
-	print hosts
-
-	#Check each host for DISCOVERY_PORT
-	hostFound = False
-	for host in hosts:
-		try:
-			# Netcat the host and check for success
-			if not hostFound and netcat(host).find("succeeded!") != -1:
-				#TODO: Check that this is not a random server on DISCOVERY_PORT
-				hostFound = True
-				print("The Cloud is located at %s" %(host))
-
-				#Write IP to file
-				f = open(cloudFile, 'w')
-				f.write(host)
-				f.close()
-				contactServer(host)
-		except:
-			pass
-		else:
-			pass
+	hostFound = False;
+	while not hostFound:
+		print "Looking for Cloud..."
+		#Get list of hosts from `arp` with valid IPs
+		hosts = getHosts()
+		print hosts
+	
+		#Check each host for DISCOVERY_PORT
+		for host in hosts:
+			try:
+				# Netcat the host and check for success
+				if not hostFound and netcat(host).find("succeeded!") != -1:
+					#TODO: Check that this is not a random server on DISCOVERY_PORT
+					hostFound = True
+					print("The Cloud is located at %s" %(host))
+	
+					#Write IP to file
+					f = open(cloudFile, 'w')
+					f.write(host)
+					f.close()
+					contactServer(host)
+			except:
+				pass
+			else:
+				pass
+			time.sleep(2);
 startServer()
 
 
