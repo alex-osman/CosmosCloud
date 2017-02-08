@@ -6,6 +6,7 @@ module.exports = function(app, database) {
   //Returns a list of all movies
   app.get('/api/connect', function(req, res) {
     connect(req.ip, function(modules) {
+      console.log(modules);
       res.send(modules);
     });
   });

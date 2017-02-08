@@ -31,6 +31,6 @@ require('./routes/misc.js')(app, config);*/
 
 
 //Start server, listen to everything
-var port = 8000;
+var port = 8888;
 app.listen(port, '0.0.0.0');
 console.log("App listening on port " + port);
