@@ -1,16 +1,31 @@
 <div ng-controller="homeCtrl">
 	<div class="container" style="padding-top: 15px">
 		<div class="row">
-			<div class="col-md-2" ng-repeat="user in users | filter:{isAlive:'true'}">
-				<figure>
-					<img ng-src="{{user.img}}" height="128" alt="{{user.Name}}"/>
-					<figcaption>{{user.Name}}</figcaption>
-				</figure>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<img src="/img/cosmos.jpg" style="max-width: 80%">
+			<div class="col-md-10 col-md-offset-2">
+				<table class="table table-bordered">
+					<tr>
+						<th>IP</th>
+						<th>Name</th>
+						<th>Modules</th>
+						<th></th>
+					</tr>
+					<tr ng-repeat="node in nodes">
+						<td>{{node.ip}}</td>
+						<td>{{node.name}}</td>
+						<td>{{node.modules | json}}</td>
+						<td>
+					</tr>
+					<tr ng-repeat="node in newNodes">
+						<td>{{node.ip}}</td>
+						<td><input type="text" ng-model="node.name"></td>
+						<td>
+							<select multiple ng-options="module for module in modules" ng-model="node.modules">
+							</select>
+							*Hold ctrl to select multiple
+						</td>
+						<td><button ng-click="configureNode(node)" class="btn btn-default">Add</button></td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</div>
