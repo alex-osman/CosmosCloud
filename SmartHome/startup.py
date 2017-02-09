@@ -7,14 +7,21 @@ import shlex
 import sys
 import os
 import urllib2
+import json
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 
 #Dedicated port
 DISCOVERY_PORT = os.environ['DISCOVERY_PORT']
 
 #Sends a request to the server
-def contactServer(coreserver):
-	print(urllib2.urlopen("http://" + coreserver + ":" + DISCOVERY_PORT + "/api/connect").read())
+def requestModules(coreserver):
+	jsonModules = urllib2.urlopen("http://" + coreserver + ":" + DISCOVERY_PORT + "/api/connect").read()
+	modules = json.loads(jsonModules)
+	for module in modules:
+		print "Starting ", module
+		subprocess.Popen(["python", module + "Server.py"]);
+
+
 
 #Basic handler that will start modules
 class myHandler(BaseHTTPRequestHandler):
@@ -65,7 +72,7 @@ if os.path.isfile(cloudFile):
 	coreserver = f.read()
 	print coreserver
 	f.close()
-	contactServer(coreserver)
+	requestModules(coreserver)
 else:
 	hostFound = False;
 	while not hostFound:
@@ -87,7 +94,7 @@ else:
 					f = open(cloudFile, 'w')
 					f.write(host)
 					f.close()
-					contactServer(host)
+					requestModules(host)
 			except:
 				pass
 			else:
