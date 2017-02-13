@@ -15,11 +15,15 @@ DISCOVERY_PORT = os.environ['DISCOVERY_PORT']
 
 #Sends a request to the server
 def requestModules(coreserver):
-	jsonModules = urllib2.urlopen("http://" + coreserver + ":" + DISCOVERY_PORT + "/api/connect").read()
-	modules = json.loads(jsonModules)
-	for module in modules:
-		print "Starting ", module
-		subprocess.Popen(["python", module + "Server.py"]);
+	try:
+		jsonModules = urllib2.urlopen("http://" + coreserver + ":" + DISCOVERY_PORT + "/api/connect").read()
+		modules = json.loads(jsonModules)
+		for module in modules:
+			print "Starting ", module
+			subprocess.Popen(["python", module + "Server.py"]);
+	except:
+		time.sleep(5);
+		requestModules(coreserver);
 
 
 

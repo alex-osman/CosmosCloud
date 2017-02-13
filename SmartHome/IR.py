@@ -7,11 +7,15 @@ while 1:
 	print(code)
 	if len(code) < 1:
 		print("Unknown")
-	elif code[0].encode("ascii") == 'power':
-		print(urllib2.urlopen("http://127.0.0.1:8080/toggle").read())
+	elif code[0].encode("ascii") == 'toggle':
+		print(urllib2.urlopen("http://127.0.0.1:8080/toggle0").read())
 	elif code[0].encode("ascii")  == 'coffee':
-		print(urllib2.urlopen("http://10.0.0.39:8080/toggle").read())
+		print(urllib2.urlopen("http://127.0.0.1:1337/api/dbus/toggleplay").read())
 	elif code[0].encode("ascii") == 'LED':
 		print(urllib2.urlopen("http://10.0.0.3:8000/rgb/toggle").read())
 	else:
-		print(urllib2.urlopen("http://127.0.0.1:8080/".__add__(code[0])).read())
+		if code[0] == "toggle0":
+			volume = "volumeup"
+		else:
+			volume = "volumedown"
+		print(urllib2.urlopen("http://127.0.0.1:1337/api/dbus/".__add__(volume)).read())
