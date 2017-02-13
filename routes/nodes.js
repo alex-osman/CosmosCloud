@@ -28,6 +28,17 @@ module.exports = function(app, database) {
     });
   })
 
+  //User deletes a node
+  app.post('/api/deleteNode', function(req, res) {
+    var node = req.body.node;
+    console.log(node);
+
+    deleteNode(node, function(result) {
+      res.send(result);
+    });
+  })
+
+
 
   //Testing purposes
   app.get('/test', function(req, res) {
@@ -70,9 +81,20 @@ var connect = function(ip, callback) {
   });  
 }
 
+//Adds settings to the database
 var configureNode = function(node, callback) {
   var collection = db.collection('nodes');
   collection.updateOne({ "ip": node.ip }, { $set: { "name": node.name, "modules": node.modules } }, function(err, result) {
+    assert.equal(err, null);
+    console.log(result);
+    callback(result);
+  })
+}
+
+//Removes node from the database
+var deleteNode = function(node, callback) {
+  var collection = db.collection('nodes');
+  collection.remove({ "ip": node.ip}, function(err, result) {  
     assert.equal(err, null);
     console.log(result);
     callback(result);

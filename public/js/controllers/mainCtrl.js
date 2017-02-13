@@ -5,6 +5,9 @@ angular
 			.when('/home', {
 				templateUrl: '/html/home.html'
 			})
+			.when('/relay', {
+				templateUrl: '/html/relay.html'
+			})
 			.when('/alarm', {
 				templateUrl: '/html/alarm.html'
 			})
