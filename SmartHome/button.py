@@ -12,7 +12,8 @@ def my_callback(channel):
 		time.sleep(.01)
 		print GPIO.input(21)
 		if GPIO.input(21) == False:
-			print(urllib2.urlopen("http://127.0.0.1:8080/toggle").read())
+			print(urllib2.urlopen("http://127.0.0.1:8080/toggle1").read())
+			print(urllib2.urlopen("http://10.0.0.64:8080/toggle0").read())
 
 GPIO.add_event_detect(21, GPIO.FALLING, callback=my_callback, bouncetime=350)
 
