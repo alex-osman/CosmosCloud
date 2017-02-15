@@ -54,7 +54,7 @@ var connect = function(ip, callback) {
   lookupIP(ip, function(dbNodes) {
     if (dbNodes.length == 1) {
       var node = dbNodes[0];
-
+      console.log(node);
       //Send modules to start
       if (node.modules) { 
         console.log("Starting " + node.name);
@@ -96,7 +96,6 @@ var deleteNode = function(node, callback) {
   var collection = db.collection('nodes');
   collection.remove({ "ip": node.ip}, function(err, result) {  
     assert.equal(err, null);
-    console.log(result);
     callback(result);
   })
 }

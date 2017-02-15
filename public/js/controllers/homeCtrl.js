@@ -1,7 +1,7 @@
 angular
 	.module("cosmosCloud")
 	.controller("homeCtrl", ["$scope", "$http", function($scope, $http) {
-		$scope.modules = ['relay', 'rgb', 'theatre']
+		$scope.modules = [{name: "relay", channels: [{name: "Light"}, {name: "Monitor"}]}, {name: "rgb"}, {name: "theatre"}]
 		$scope.nodes = [];
 		$scope.newNodes = [];
 
